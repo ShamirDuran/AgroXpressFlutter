@@ -1,3 +1,4 @@
+import 'package:agroxpress/src/utils/dimens.dart';
 import 'package:flutter/material.dart';
 
 class InputField extends StatelessWidget {
@@ -6,6 +7,8 @@ class InputField extends StatelessWidget {
   final IconData icon;
   final TextInputType inputType;
   final TextInputAction inputAction;
+
+  final kTextStyle = TextStyle(fontSize: 22, color: Colors.white);
 
   InputField(
       {@required this.hintText,
@@ -16,29 +19,35 @@ class InputField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+
     return Container(
-      height: 60.0,
-      decoration: BoxDecoration(
-        color: Colors.grey[500].withOpacity(0.5),
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Center(
-        child: TextField(
-          textAlignVertical: TextAlignVertical.bottom,
-          obscureText: password,
-          decoration: InputDecoration(
-            border: InputBorder.none,
-            prefixIcon: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: Icon(icon, size: 34.0, color: Colors.white),
-            ),
-            hintText: hintText,
-            hintStyle: TextStyle(fontSize: 22, color: Colors.white),
+      height: 80.0,
+      width: size.width * 0.8,
+      child: TextFormField(
+        obscureText: this.password,
+        textAlignVertical: TextAlignVertical.bottom,
+        cursorColor: Theme.of(context).primaryColor,
+        decoration: InputDecoration(
+          filled: true,
+          errorStyle: TextStyle(fontSize: 17.0),
+          fillColor: Colors.grey[500].withOpacity(0.5),
+          border: OutlineInputBorder(borderRadius: kBorderRadius),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: kBorderRadius,
+            borderSide: BorderSide(color: Theme.of(context).accentColor),
           ),
-          style: TextStyle(fontSize: 22, color: Colors.white),
-          keyboardType: inputType,
-          textInputAction: inputAction,
+          labelText: this.hintText,
+          labelStyle: this.kTextStyle,
+          prefixIcon: Icon(
+            this.icon,
+            color: Colors.white,
+            size: 26.0,
+          ),
         ),
+        keyboardType: this.inputType,
+        textInputAction: this.inputAction,
+        style: this.kTextStyle,
       ),
     );
   }

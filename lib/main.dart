@@ -14,6 +14,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         textTheme:
             GoogleFonts.josefinSansTextTheme(Theme.of(context).textTheme),
+        primaryColor: Colors.indigo,
       ),
       debugShowCheckedModeBanner: false,
       title: 'AgroXpress',
