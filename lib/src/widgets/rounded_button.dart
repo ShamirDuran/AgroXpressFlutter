@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 
 class RoundedButton extends StatelessWidget {
   final String text;
+  final onPress;
 
-  RoundedButton({@required this.text});
+  RoundedButton({@required this.text, @required this.onPress});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +16,9 @@ class RoundedButton extends StatelessWidget {
       height: 63,
       decoration: BoxDecoration(
         borderRadius: kBorderRadius,
-        color: Theme.of(context).primaryColor,
+        color: (this.onPress != null)
+            ? Theme.of(context).primaryColor
+            : Theme.of(context).disabledColor,
       ),
       child: FlatButton(
         child: Text(
@@ -25,7 +28,7 @@ class RoundedButton extends StatelessWidget {
               .headline6
               .copyWith(color: Colors.white, fontWeight: FontWeight.bold),
         ),
-        onPressed: () {},
+        onPressed: this.onPress,
       ),
     );
   }

@@ -1,3 +1,4 @@
+import 'package:agroxpress/src/bloc/login_bloc.dart';
 import 'package:agroxpress/src/widgets/divider_or.dart';
 import 'package:flutter/material.dart';
 import 'package:agroxpress/src/utils/utils.dart';
@@ -5,40 +6,76 @@ import 'package:agroxpress/src/widgets/background_poster.dart';
 import 'package:agroxpress/src/widgets/input_field.dart';
 import 'package:agroxpress/src/widgets/rounded_button.dart';
 import 'package:agroxpress/src/widgets/title_expanded.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final _bloc = Provider.of<LoginBloc>(context);
+
     return Stack(
       children: [
         BackgroundPoster(),
         Scaffold(
           backgroundColor: Colors.transparent,
-          body: Column(
-            children: [
-              TitleExpanded(title: "AgroXpress"),
-              InputField(
-                  hintText: "Correo",
-                  password: false,
-                  icon: Icons.email_outlined,
-                  inputType: TextInputType.emailAddress,
-                  inputAction: TextInputAction.next),
-              sb(10.0),
-              InputField(
-                  hintText: "Contraseña",
-                  password: true,
-                  icon: Icons.lock,
-                  inputType: TextInputType.name,
-                  inputAction: TextInputAction.done),
-              olvidePwd(context),
-              sb(45),
-              RoundedButton(
-                text: "Login",
-              ),
-              DividerOr(),
-              crearNuevaCuenta(context),
-              sb(27.0)
-            ],
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                // Title agroxpress
+                TitleExpanded(
+                  title: "AgroXpress",
+                  padTop: 0.16,
+                  padBottom: 0.15,
+                ),
+                // Email
+                StreamBuilder<Object>(
+                    stream: _bloc.emailStream,
+                    builder: (context, snapshot) {
+                      return InputField(
+                        hintText: "Correo",
+                        password: false,
+                        icon: Icons.email_outlined,
+                        inputType: TextInputType.emailAddress,
+                        inputAction: TextInputAction.next,
+                        error: snapshot.error,
+                        changeValue: _bloc.changeEmail,
+                      );
+                    }),
+                sb(10.0),
+                // Password
+                StreamBuilder<Object>(
+                    stream: _bloc.passwordStream,
+                    builder: (context, snapshot) {
+                      return InputField(
+                        hintText: "Contraseña",
+                        password: true,
+                        icon: Icons.lock,
+                        inputType: TextInputType.name,
+                        inputAction: TextInputAction.done,
+                        error: snapshot.error,
+                        changeValue: _bloc.changePassword,
+                      );
+                    }),
+                // Forgot pwd link
+                olvidePwd(context),
+                sb(45),
+                // Login button
+                StreamBuilder<Object>(
+                    stream: _bloc.formValidStream,
+                    builder: (context, snapshot) {
+                      return RoundedButton(
+                        text: "Login",
+                        onPress: (snapshot.hasData)
+                            ? () => _login(_bloc, context)
+                            : null,
+                      );
+                    }),
+                DividerOr(),
+                // Register link
+                crearNuevaCuenta(context),
+                sb(27.0)
+              ],
+            ),
           ),
         ),
       ],
@@ -75,5 +112,9 @@ class LoginPage extends StatelessWidget {
                 Border(bottom: BorderSide(width: 1.0, color: Colors.white))),
       ),
     );
+  }
+
+  _login(LoginBloc bloc, BuildContext context) async {
+    print("login...");
   }
 }
