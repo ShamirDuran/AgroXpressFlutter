@@ -131,6 +131,8 @@ class RegisterPage extends StatelessWidget {
           "¿Ya tienes una cuenta? Login",
           style: Theme.of(context).textTheme.headline6.copyWith(
                 color: Colors.white,
+                fontFamily: kFontFamilyJos,
+                fontSize: 18.0,
               ),
         ),
         decoration: BoxDecoration(

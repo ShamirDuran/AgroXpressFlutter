@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class TitleExpanded extends StatelessWidget {
   final String title;
@@ -23,12 +22,12 @@ class TitleExpanded extends StatelessWidget {
       child: Center(
         child: Text(
           this.title,
-          style: GoogleFonts.pacifico(
-              textStyle: TextStyle(
+          style: TextStyle(
+            fontFamily: "Pacifico",
             color: Colors.white,
-            fontSize: 60,
+            fontSize: 60.0,
             fontWeight: FontWeight.normal,
-          )),
+          ),
         ),
       ),
     );

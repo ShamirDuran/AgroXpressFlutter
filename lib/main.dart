@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:agroxpress/src/pages/login_page.dart';
 import 'package:agroxpress/src/pages/register_page.dart';
 import 'package:agroxpress/src/utils/user_prefs.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 void main() async {
   // User preferences
@@ -30,12 +29,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _prefs = new UserPref();
+    print('token: ${_prefs.token}');
 
     return MaterialApp(
       theme: ThemeData(
-        textTheme:
-            GoogleFonts.josefinSansTextTheme(Theme.of(context).textTheme),
-        primaryColor: Colors.indigo,
+        primaryColor: Colors.indigoAccent,
         disabledColor: Colors.indigo[200],
       ),
       debugShowCheckedModeBanner: false,

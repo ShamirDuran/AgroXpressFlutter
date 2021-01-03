@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+final String kFontFamilyJos = "JosefinSans";
+
 Widget sb(double height) {
   return SizedBox(height: height);
 }

@@ -1,4 +1,5 @@
 import 'package:agroxpress/src/utils/dimens.dart';
+import 'package:agroxpress/src/utils/utils.dart';
 import 'package:flutter/material.dart';
 
 class RoundedButton extends StatelessWidget {
@@ -13,7 +14,7 @@ class RoundedButton extends StatelessWidget {
 
     return Container(
       width: size.width * 0.8,
-      height: 63,
+      height: 60,
       decoration: BoxDecoration(
         borderRadius: kBorderRadius,
         color: (this.onPress != null)
@@ -23,10 +24,11 @@ class RoundedButton extends StatelessWidget {
       child: FlatButton(
         child: Text(
           this.text,
-          style: Theme.of(context)
-              .textTheme
-              .headline6
-              .copyWith(color: Colors.white, fontWeight: FontWeight.bold),
+          style: Theme.of(context).textTheme.headline6.copyWith(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontFamily: kFontFamilyJos,
+              ),
         ),
         onPressed: this.onPress,
       ),

@@ -1,3 +1,4 @@
+import 'package:agroxpress/src/utils/utils.dart';
 import 'package:flutter/material.dart';
 
 import 'divider_expanded.dart';
@@ -15,11 +16,15 @@ class DividerOr extends StatelessWidget {
           DividerExpanded(),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10.0),
-            child: Text("ó",
-                style: Theme.of(context)
-                    .textTheme
-                    .headline5
-                    .copyWith(color: Colors.white)),
+            child: Text(
+              "ó",
+              style: TextStyle(
+                color: Colors.white,
+                fontFamily: kFontFamilyJos,
+                fontSize: 24.0,
+                fontWeight: FontWeight.normal,
+              ),
+            ),
           ),
           DividerExpanded(),
         ],

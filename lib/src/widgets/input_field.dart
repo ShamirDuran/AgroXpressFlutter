@@ -1,4 +1,5 @@
 import 'package:agroxpress/src/utils/dimens.dart';
+import 'package:agroxpress/src/utils/utils.dart';
 import 'package:flutter/material.dart';
 
 class InputField extends StatelessWidget {
@@ -10,7 +11,18 @@ class InputField extends StatelessWidget {
   final String error;
   final changeValue;
 
-  final kTextStyle = TextStyle(fontSize: 20, color: Colors.white);
+  final kTextStyle = TextStyle(
+    fontSize: 18,
+    fontFamily: kFontFamilyJos,
+    fontWeight: FontWeight.normal,
+    color: Colors.white,
+  );
+
+  final kErrorStyle = TextStyle(
+    fontSize: 17.0,
+    fontFamily: kFontFamilyJos,
+    color: Color(0xFFff7675),
+  );
 
   InputField({
     @required this.hintText,
@@ -36,7 +48,7 @@ class InputField extends StatelessWidget {
         decoration: InputDecoration(
           border: OutlineInputBorder(borderRadius: kBorderRadius),
           errorText: this.error,
-          errorStyle: TextStyle(fontSize: 17.0, color: Color(0xFFff7675)),
+          errorStyle: this.kErrorStyle,
           filled: true,
           fillColor: Colors.grey[500].withOpacity(0.5),
           focusedBorder: OutlineInputBorder(
@@ -45,6 +57,9 @@ class InputField extends StatelessWidget {
           ),
           labelText: this.hintText,
           labelStyle: this.kTextStyle,
+          hintStyle: TextStyle(
+            fontFamily: kFontFamilyJos,
+          ),
           prefixIcon: Icon(
             this.icon,
             color: Colors.white,

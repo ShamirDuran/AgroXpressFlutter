@@ -110,11 +110,13 @@ class LoginPage extends StatelessWidget {
       onTap: () {
         print("Tap forgot password");
       },
-      child: Text("¿Olvidaste tu contraseña?",
-          style: Theme.of(context)
-              .textTheme
-              .subtitle1
-              .copyWith(color: Colors.white)),
+      child: Text(
+        "¿Olvidaste tu contraseña?",
+        style: Theme.of(context).textTheme.subtitle1.copyWith(
+              color: Colors.white,
+              fontFamily: kFontFamilyJos,
+            ),
+      ),
     );
   }
 
@@ -127,11 +129,18 @@ class LoginPage extends StatelessWidget {
           "Crear nueva cuenta",
           style: Theme.of(context).textTheme.headline6.copyWith(
                 color: Colors.white,
+                fontFamily: kFontFamilyJos,
+                fontSize: 18.0,
               ),
         ),
         decoration: BoxDecoration(
-            border:
-                Border(bottom: BorderSide(width: 1.0, color: Colors.white))),
+          border: Border(
+            bottom: BorderSide(
+              width: 1.0,
+              color: Colors.white,
+            ),
+          ),
+        ),
       ),
     );
   }

@@ -12,6 +12,8 @@ class UserPref {
     this._prefs = await SharedPreferences.getInstance();
   }
 
+  // Get token
   get token => _prefs.getString("token") ?? "";
+  // Set token
   set token(String value) => _prefs.setString("token", value);
 }
