@@ -1,30 +1,45 @@
+import 'package:flutter/material.dart';
 import 'package:agroxpress/src/bloc/register_bloc.dart';
+import 'package:agroxpress/src/providers/user_provider.dart';
 import 'package:agroxpress/src/utils/utils.dart';
 import 'package:agroxpress/src/widgets/background_poster.dart';
 import 'package:agroxpress/src/widgets/divider_or.dart';
 import 'package:agroxpress/src/widgets/input_field.dart';
 import 'package:agroxpress/src/widgets/rounded_button.dart';
 import 'package:agroxpress/src/widgets/title_expanded.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class RegisterPage extends StatelessWidget {
+  final _userProvider = new UserProvider();
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
-    final _bloc = Provider.of<RegisterBloc>(context);
+    final _bloc = RegisterBloc();
 
     return Stack(
       children: [
         BackgroundPoster(),
         Scaffold(
+          key: _scaffoldKey,
           backgroundColor: Colors.transparent,
           body: SingleChildScrollView(
             child: Column(
               children: [
-                TitleExpanded(
-                  title: "Registro",
-                  padTop: 0.16,
-                  padBottom: 0.032,
+                LayoutBuilder(
+                  builder: (BuildContext context, BoxConstraints constraints) {
+                    return TitleExpanded(
+                      title: "Registro",
+                      padTop: (constraints.maxHeight <= 720)
+                          ? (constraints.maxHeight <= 640)
+                              //  <= 640
+                              ? 0.04
+                              // <= 720
+                              : 0.12
+                          // > 720
+                          : 0.13,
+                      padBottom: (constraints.maxHeight <= 820) ? 0.032 : 0.04,
+                    );
+                  },
                 ),
                 // Name
                 StreamBuilder<Object>(
@@ -98,7 +113,7 @@ class RegisterPage extends StatelessWidget {
                 DividerOr(),
                 // I have account label
                 alreadyHaveAcount(context),
-                sb(27),
+                sb(10),
               ],
             ),
           ),
@@ -109,7 +124,6 @@ class RegisterPage extends StatelessWidget {
 
   Widget alreadyHaveAcount(BuildContext context) {
     return GestureDetector(
-      // TODO: revisar el navigator
       onTap: () => Navigator.pushNamed(context, "login"),
       child: Container(
         padding: EdgeInsets.only(bottom: 5.0),
@@ -126,7 +140,11 @@ class RegisterPage extends StatelessWidget {
     );
   }
 
-  _register(RegisterBloc bloc, BuildContext context) {
-    print("Register...");
+  void _register(RegisterBloc bloc, BuildContext context) async {
+    print('bloc: ${bloc.email}');
+    final resp = await _userProvider.registerUser(bloc.email, bloc.password);
+    (resp == true)
+        ? Navigator.pushReplacementNamed(context, "home")
+        : showSnackBar(resp, _scaffoldKey);
   }
 }

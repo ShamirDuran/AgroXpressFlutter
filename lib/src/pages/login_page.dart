@@ -1,31 +1,53 @@
-import 'package:agroxpress/src/bloc/login_bloc.dart';
-import 'package:agroxpress/src/widgets/divider_or.dart';
 import 'package:flutter/material.dart';
+import 'package:agroxpress/src/bloc/login_bloc.dart';
+import 'package:agroxpress/src/providers/user_provider.dart';
+import 'package:agroxpress/src/widgets/divider_or.dart';
 import 'package:agroxpress/src/utils/utils.dart';
 import 'package:agroxpress/src/widgets/background_poster.dart';
 import 'package:agroxpress/src/widgets/input_field.dart';
 import 'package:agroxpress/src/widgets/rounded_button.dart';
 import 'package:agroxpress/src/widgets/title_expanded.dart';
-import 'package:provider/provider.dart';
 
 class LoginPage extends StatelessWidget {
+  final _userProvider = UserProvider();
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
-    final _bloc = Provider.of<LoginBloc>(context);
+    final _bloc = LoginBloc();
 
     return Stack(
       children: [
         BackgroundPoster(),
         Scaffold(
+          key: _scaffoldKey,
           backgroundColor: Colors.transparent,
           body: SingleChildScrollView(
             child: Column(
               children: [
                 // Title agroxpress
-                TitleExpanded(
-                  title: "AgroXpress",
-                  padTop: 0.16,
-                  padBottom: 0.15,
+                LayoutBuilder(
+                  builder: (BuildContext context, BoxConstraints constraints) {
+                    return TitleExpanded(
+                      title: "AgroXpress",
+                      padTop: (constraints.maxHeight <= 720)
+                          ? (constraints.maxHeight <= 640)
+                              // <= 640
+                              ? 0.10
+                              // <= 720
+                              : 0.14
+                          // > 720
+                          : 0.16,
+                      padBottom: (constraints.maxHeight <= 720)
+                          ? (constraints.maxHeight <= 640)
+                              // <= 640
+                              ? 0.04
+                              // <= 720
+                              : 0.09
+                          // > 720
+                          : 0.14,
+                    );
+                  },
                 ),
                 // Email
                 StreamBuilder<Object>(
@@ -57,6 +79,7 @@ class LoginPage extends StatelessWidget {
                       );
                     }),
                 // Forgot pwd link
+                sb(10.0),
                 olvidePwd(context),
                 sb(45),
                 // Login button
@@ -73,7 +96,7 @@ class LoginPage extends StatelessWidget {
                 DividerOr(),
                 // Register link
                 crearNuevaCuenta(context),
-                sb(27.0)
+                sb(10.0)
               ],
             ),
           ),
@@ -97,8 +120,7 @@ class LoginPage extends StatelessWidget {
 
   Widget crearNuevaCuenta(BuildContext context) {
     return GestureDetector(
-      // TODO: revisar el navigator
-      onTap: () => Navigator.pushNamed(context, "register"),
+      onTap: () => Navigator.pushReplacementNamed(context, "register"),
       child: Container(
         padding: EdgeInsets.only(bottom: 5.0),
         child: Text(
@@ -114,7 +136,10 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  _login(LoginBloc bloc, BuildContext context) async {
-    print("login...");
+  void _login(LoginBloc bloc, BuildContext context) async {
+    final resp = await _userProvider.loginUser(bloc.email, bloc.password);
+    resp
+        ? Navigator.pushReplacementNamed(context, "home")
+        : showSnackBar("Correo o contraseña incorrecta", _scaffoldKey);
   }
 }
