@@ -1,49 +1,57 @@
 import 'package:agroxpress/src/utils/dimens.dart';
+import 'package:agroxpress/src/utils/icons.dart';
 import 'package:agroxpress/src/utils/user_prefs.dart';
 import 'package:agroxpress/src/utils/utils.dart';
+import 'package:agroxpress/src/widgets/circle_image.dart';
 import 'package:agroxpress/src/widgets/list_tile_drawer.dart';
 import 'package:flutter/material.dart';
 
 class DrawerMenu extends StatelessWidget {
+  final _userPrefs = UserPref();
+
   @override
   Widget build(BuildContext context) {
-    final _userPrefs = UserPref();
     return Drawer(
       child: SingleChildScrollView(
         child: Column(
           children: [
             // Drawer profile header
             DrawerHeader(
+              padding: EdgeInsets.all(0),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Colors.blue[400],
+                    Colors.indigoAccent,
+                  ],
+                ),
+              ),
               child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 15.0),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Container(
+                    CircleImage(
                       width: 90,
                       height: 90,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: AssetImage(
-                              "assets/images/person-placeholder.jpg"),
-                        ),
-                      ),
+                      imgUrl: "assets/images/person-placeholder.jpg",
+                      radius: 100,
                     ),
                     SizedBox(width: 12),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("Hola"),
+                        Text(
+                          "Hola",
+                          style: TextStyle(color: Colors.white, fontSize: 16.0),
+                        ),
                         sb(8),
                         // TODO: Poner nombre del usuario
                         Text(
                           "Shamir Duran",
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline5
-                              .copyWith(fontWeight: FontWeight.bold),
+                          style: Theme.of(context).textTheme.headline5.copyWith(
+                              fontWeight: FontWeight.bold, color: Colors.white),
                         ),
                       ],
                     )
@@ -51,40 +59,41 @@ class DrawerMenu extends StatelessWidget {
                 ),
               ),
             ),
+
             // Drawer options menu
             ListTileDrawer(
               title: "Inicio",
-              icon: Icons.home_outlined,
+              icon: kHomeIcon,
               onTapTile: () => print("home"),
             ),
             ListTileDrawer(
               title: "Buscar",
-              icon: Icons.search_outlined,
+              icon: kSearchIcon,
               onTapTile: () => print("search"),
             ),
             ListTileDrawer(
               title: "Notificaciones",
-              icon: Icons.notifications_outlined,
-              onTapTile: () => print("Notificaiones"),
+              icon: kNotificationsIcon,
+              onTapTile: () => print("Notificaciones"),
             ),
             ListTileDrawer(
               title: "Mis compras",
-              icon: Icons.shopping_bag_outlined,
+              icon: kShoppingIcon,
               onTapTile: () => print("Mis compras"),
             ),
             ListTileDrawer(
               title: "Favoritos",
-              icon: Icons.favorite_border_outlined,
+              icon: kFavoritesIcon,
               onTapTile: () => print("Favoritos"),
             ),
             ListTileDrawer(
               title: "Mi perfil",
-              icon: Icons.person_outline,
-              onTapTile: () => print("Mi perfil"),
+              icon: kProfileIcon,
+              onTapTile: () => Navigator.pushNamed(context, "perfil"),
             ),
             ListTileDrawer(
               title: "Vender",
-              icon: Icons.local_offer_outlined,
+              icon: kSellIcon,
               onTapTile: () => print("Vender"),
             ),
             Divider(
@@ -93,12 +102,12 @@ class DrawerMenu extends StatelessWidget {
             ),
             ListTileDrawer(
               title: "Categorias",
-              icon: Icons.list_outlined,
+              icon: kCategoriesIcon,
               onTapTile: () => print("Categorias"),
             ),
             ListTileDrawer(
               title: "Ayuda",
-              icon: Icons.help_outline,
+              icon: kHelpIcon,
               onTapTile: () => print("Help"),
             ),
             Divider(
@@ -107,15 +116,12 @@ class DrawerMenu extends StatelessWidget {
             ),
             ListTileDrawer(
               title: "Cerrar sesión",
-              icon: Icons.login_outlined,
-              onTapTile: () {
-                _userPrefs.token = "";
-                Navigator.pushReplacementNamed(context, "login");
-              },
+              icon: kLogoutIcon,
+              onTapTile: () => showLogOutDialog(context, _userPrefs),
             ),
             ListTileDrawer(
               title: "Acerca de nosotros",
-              icon: Icons.info_outline,
+              icon: kAboutusIcon,
               onTapTile: () => print("About us"),
             ),
             sb(30),

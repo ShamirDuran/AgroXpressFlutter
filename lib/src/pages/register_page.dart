@@ -8,14 +8,24 @@ import 'package:agroxpress/src/widgets/input_field.dart';
 import 'package:agroxpress/src/widgets/rounded_button.dart';
 import 'package:agroxpress/src/widgets/title_expanded.dart';
 
-class RegisterPage extends StatelessWidget {
+class RegisterPage extends StatefulWidget {
+  @override
+  _RegisterPageState createState() => _RegisterPageState();
+}
+
+class _RegisterPageState extends State<RegisterPage> {
   final _userProvider = new UserProvider();
+  final _bloc = RegisterBloc();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
-  Widget build(BuildContext context) {
-    final _bloc = RegisterBloc();
+  void dispose() {
+    _bloc.dispose();
+    super.dispose();
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Stack(
       children: [
         BackgroundPoster(),

@@ -1,28 +1,30 @@
+import 'package:agroxpress/src/search/search_delegate.dart';
 import 'package:agroxpress/src/widgets/drawer_menu.dart';
 import 'package:flutter/material.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      appBar: buildAppBar(context),
-      drawer: buildDrawer(context),
+      appBar: buildAppBar(),
+      drawer: DrawerMenu(),
       body: Center(
         child: Text("HomePage"),
       ),
     );
   }
 
-  Widget buildDrawer(BuildContext context) {
-    return DrawerMenu();
-  }
-
-  AppBar buildAppBar(BuildContext context) {
+  AppBar buildAppBar() {
     return AppBar(
-      backgroundColor: Colors.indigoAccent,
+      backgroundColor: Theme.of(context).primaryColor,
       // Left icon
       leading: IconButton(
         icon: Icon(Icons.menu),
@@ -42,7 +44,8 @@ class HomePage extends StatelessWidget {
 
   GestureDetector searchAppBar() {
     return GestureDetector(
-      onTap: () => print("tap search"),
+      // Search delegate action
+      onTap: () => showSearch(context: context, delegate: DataSearch()),
       child: Container(
         alignment: Alignment.topLeft,
         padding: EdgeInsets.symmetric(

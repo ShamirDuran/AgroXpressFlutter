@@ -40,6 +40,7 @@ class RegisterBloc with Validators {
   String get password => _passwordController.value;
   String get rePassword => _rePasswordController.value;
 
+  /// Close all streams
   void dispose() {
     this._nameController.close();
     this._emailController.close();
