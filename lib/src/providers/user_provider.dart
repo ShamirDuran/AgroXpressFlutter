@@ -18,6 +18,7 @@ class UserProvider {
     Map<String, dynamic> decodedResp = json.decode(resp.body);
 
     if (decodedResp["ok"] == true) {
+      print(decodedResp);
       _prefs.token = decodedResp["token"];
       return true;
     } else {
