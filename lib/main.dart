@@ -1,5 +1,6 @@
+import 'package:agroxpress/src/pages/categories_page.dart';
 import 'package:agroxpress/src/pages/home_page.dart';
-import 'package:agroxpress/src/pages/perfil.dart';
+import 'package:agroxpress/src/pages/perfil_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:agroxpress/src/pages/login_page.dart';
@@ -40,11 +41,13 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'AgroXpress',
       initialRoute: (_prefs.token != "") ? "home" : "login",
+      // initialRoute: "categories",
       routes: {
         "home": (_) => HomePage(),
         "login": (_) => LoginPage(),
         "register": (_) => RegisterPage(),
         "perfil": (_) => PerfilPage(),
+        "categories": (_) => CategoriesPage(),
       },
     );
   }

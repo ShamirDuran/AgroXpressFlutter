@@ -49,13 +49,15 @@ class CircleImage extends StatelessWidget {
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(this.radius),
-        child: FadeInImage(
-          image: NetworkImage(this.imgUrl),
-          placeholder: AssetImage("assets/images/person-placeholder.jpg"),
-          height: this.height,
-          width: this.width,
-          fit: BoxFit.cover,
-        ),
+        child: (this.imgUrl.contains("http")
+            ? FadeInImage(
+                image: NetworkImage(this.imgUrl),
+                placeholder: AssetImage("assets/images/person-placeholder.jpg"),
+                height: this.height,
+                width: this.width,
+                fit: BoxFit.cover,
+              )
+            : Image.asset("assets/images/person-placeholder.jpg")),
       ),
     );
   }

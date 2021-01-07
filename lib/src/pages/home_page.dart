@@ -14,7 +14,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      appBar: buildAppBar(),
+      appBar: _buildAppBar(),
       drawer: DrawerMenu(),
       body: Center(
         child: Text("HomePage"),
@@ -22,7 +22,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  AppBar buildAppBar() {
+  AppBar _buildAppBar() {
     return AppBar(
       backgroundColor: Theme.of(context).primaryColor,
       // Left icon
@@ -37,12 +37,12 @@ class _HomePageState extends State<HomePage> {
           onPressed: () {},
         )
       ],
-      title: searchAppBar(),
+      title: _searchAppBar(),
       centerTitle: true,
     );
   }
 
-  GestureDetector searchAppBar() {
+  GestureDetector _searchAppBar() {
     return GestureDetector(
       // Search delegate action
       onTap: () => showSearch(context: context, delegate: DataSearch()),

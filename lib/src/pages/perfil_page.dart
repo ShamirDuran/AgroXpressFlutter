@@ -1,4 +1,5 @@
 import 'package:agroxpress/src/utils/icons.dart';
+import 'package:agroxpress/src/utils/styles.dart';
 import 'package:agroxpress/src/utils/user_prefs.dart';
 import 'package:agroxpress/src/utils/utils.dart';
 import 'package:agroxpress/src/widgets/circle_image.dart';
@@ -162,16 +163,11 @@ class _PerfilPageState extends State<PerfilPage> {
   AppBar buildAppBar() {
     return AppBar(
       backgroundColor: Theme.of(context).primaryColor,
-      leading: IconButton(
-        icon: Icon(
-          Icons.arrow_back,
-          color: Colors.white,
-        ),
-        onPressed: () => Navigator.pushReplacementNamed(context, "home"),
-      ),
       title: Text(
         "Mi perfil",
-        style: TextStyle(fontWeight: FontWeight.w300),
+        style: TextStyle(
+          fontWeight: kAppbarTitles,
+        ),
       ),
     );
   }

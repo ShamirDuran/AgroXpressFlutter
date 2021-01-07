@@ -1,3 +1,4 @@
+import 'package:agroxpress/src/search/search_delegate.dart';
 import 'package:agroxpress/src/utils/dimens.dart';
 import 'package:agroxpress/src/utils/icons.dart';
 import 'package:agroxpress/src/utils/user_prefs.dart';
@@ -69,7 +70,8 @@ class DrawerMenu extends StatelessWidget {
             ListTileDrawer(
               title: "Buscar",
               icon: kSearchIcon,
-              onTapTile: () => print("search"),
+              onTapTile: () =>
+                  showSearch(context: context, delegate: DataSearch()),
             ),
             ListTileDrawer(
               title: "Notificaciones",
@@ -103,7 +105,7 @@ class DrawerMenu extends StatelessWidget {
             ListTileDrawer(
               title: "Categorias",
               icon: kCategoriesIcon,
-              onTapTile: () => print("Categorias"),
+              onTapTile: () => Navigator.pushNamed(context, "categories"),
             ),
             ListTileDrawer(
               title: "Ayuda",
