@@ -20,6 +20,7 @@ class UserProvider {
     if (decodedResp["ok"] == true) {
       print(decodedResp);
       _prefs.token = decodedResp["token"];
+      // TODO: agregar datos a las preferencias
       return true;
     } else {
       print(decodedResp);
@@ -28,8 +29,11 @@ class UserProvider {
   }
 
   // User register
-  Future<dynamic> registerUser(String email, String password) async {
+  Future<dynamic> registerUser(
+      String name, String surname, String email, String password) async {
     final authData = {
+      "name": name,
+      "surname": surname,
       "email": email,
       "password": password,
     };

@@ -26,6 +26,9 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    print(size);
+
     return Stack(
       children: [
         BackgroundPoster(),
@@ -35,21 +38,17 @@ class _RegisterPageState extends State<RegisterPage> {
           body: SingleChildScrollView(
             child: Column(
               children: [
-                LayoutBuilder(
-                  builder: (BuildContext context, BoxConstraints constraints) {
-                    return TitleExpanded(
-                      title: "Registro",
-                      padTop: (constraints.maxHeight <= 720)
-                          ? (constraints.maxHeight <= 640)
-                              //  <= 640
-                              ? 0.04
-                              // <= 720
-                              : 0.12
-                          // > 720
-                          : 0.13,
-                      padBottom: (constraints.maxHeight <= 820) ? 0.032 : 0.04,
-                    );
-                  },
+                TitleExpanded(
+                  title: "Registro",
+                  padTop: (size.height <= 720)
+                      ? (size.height <= 640)
+                          //  <= 640
+                          ? 0.04
+                          // <= 720
+                          : 0.06
+                      // > 720
+                      : 0.13,
+                  padBottom: (size.height <= 820) ? 0.032 : 0.04,
                 ),
                 // Name
                 StreamBuilder<Object>(
@@ -63,6 +62,21 @@ class _RegisterPageState extends State<RegisterPage> {
                       inputAction: TextInputAction.next,
                       error: snapshot.error,
                       changeValue: _bloc.changeName,
+                    );
+                  },
+                ),
+                // Surname
+                StreamBuilder<Object>(
+                  stream: _bloc.surnameStream,
+                  builder: (context, snapshot) {
+                    return InputField(
+                      hintText: "Apellido",
+                      password: false,
+                      icon: Icons.person,
+                      inputType: TextInputType.name,
+                      inputAction: TextInputAction.next,
+                      error: snapshot.error,
+                      changeValue: _bloc.changeSurname,
                     );
                   },
                 ),
@@ -154,9 +168,20 @@ class _RegisterPageState extends State<RegisterPage> {
 
   void _register(RegisterBloc bloc, BuildContext context) async {
     print('bloc: ${bloc.email}');
-    final resp = await _userProvider.registerUser(bloc.email, bloc.password);
-    (resp == true)
-        ? Navigator.pushReplacementNamed(context, "home")
-        : showSnackBar(resp, _scaffoldKey);
+
+    final resp = await _userProvider.registerUser(
+      bloc.name,
+      bloc.surname,
+      bloc.email,
+      bloc.password,
+    );
+
+    if (resp == true) {
+      showSnackBar("Se ha registrado correctamente", _scaffoldKey);
+      Navigator.pushReplacementNamed(context, "login");
+    } else {
+      showSnackBar(resp, _scaffoldKey);
+      // TODO: Add error to stream
+    }
   }
 }

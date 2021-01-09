@@ -40,8 +40,8 @@ class MyApp extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
       title: 'AgroXpress',
-      initialRoute: (_prefs.token != "") ? "home" : "login",
-      // initialRoute: "categories",
+      // initialRoute: (_prefs.token != "") ? "home" : "login",
+      initialRoute: "login",
       routes: {
         "home": (_) => HomePage(),
         "login": (_) => LoginPage(),

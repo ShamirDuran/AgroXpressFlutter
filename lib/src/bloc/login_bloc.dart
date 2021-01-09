@@ -25,7 +25,7 @@ class LoginBloc with Validators {
 
   /// Close all streams
   void dispose() {
-    this._emailController.close();
-    this._passwordController.close();
+    _emailController.close();
+    _passwordController.close();
   }
 }

@@ -15,6 +15,20 @@ class Validators {
     },
   );
 
+  final surnameValidator = StreamTransformer<String, String>.fromHandlers(
+    handleData: (surname, sink) {
+      if (surname.isEmpty) {
+        sink.addError("Escriba su apellido");
+      } else {
+        if (surname.length < 3) {
+          sink.addError("Debe tener almenos 3 caracteres");
+        } else {
+          sink.add(surname);
+        }
+      }
+    },
+  );
+
   final validatorEmail = StreamTransformer<String, String>.fromHandlers(
     handleData: (email, sink) {
       Pattern pattern =
