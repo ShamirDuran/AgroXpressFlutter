@@ -158,7 +158,7 @@ class _LoginPageState extends State<LoginPage> {
   void _login(LoginBloc bloc, BuildContext context) async {
     final resp = await _userProvider.loginUser(bloc.email, bloc.password);
     resp
-        ? Navigator.pushReplacementNamed(context, "home")
+        ? Navigator.pushNamedAndRemoveUntil(context, "home", (r) => false)
         : showSnackBar("Correo o contraseña incorrecta", _scaffoldKey);
   }
 }

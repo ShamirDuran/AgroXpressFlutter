@@ -178,7 +178,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
     if (resp == true) {
       showSnackBar("Se ha registrado correctamente", _scaffoldKey);
-      Navigator.pushReplacementNamed(context, "login");
+      Navigator.pushNamedAndRemoveUntil(context, "login", (r) => false);
     } else {
       showSnackBar(resp, _scaffoldKey);
       // TODO: Add error to stream

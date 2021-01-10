@@ -11,13 +11,20 @@ class PerfilPage extends StatefulWidget {
 }
 
 class _PerfilPageState extends State<PerfilPage> {
-  // TODO: Get data from user preferences
-  final String name = "Shamir Duran";
-  final String ubication = "Santander, Bucaramanga";
-  final String photo =
-      "https://res.cloudinary.com/dvzdtemiq/image/upload/v1609792486/srepnklkzcm5lfdgulyo.jpg";
+  UserPref _userPref;
+  String _name;
+  String _image;
 
-  final _userPref = new UserPref();
+  @override
+  void initState() {
+    super.initState();
+    _userPref = UserPref();
+    _name = _userPref.name;
+    _image = _userPref.image;
+  }
+
+  // TODO: Obtener datos desde petcicion al backend - cambiar ubicacion
+  final String _ubication = "Santander, Bucaramanga";
 
   // Actions menu
   final List<Map<String, dynamic>> actionsList = [
@@ -78,7 +85,7 @@ class _PerfilPageState extends State<PerfilPage> {
               CircleImage(
                 width: 110,
                 height: 110,
-                imgUrl: this.photo,
+                imgUrl: this._image,
                 radius: 100,
               ),
               sb(4),
@@ -104,7 +111,7 @@ class _PerfilPageState extends State<PerfilPage> {
   // User name
   Text _nameheader(BuildContext context) {
     return Text(
-      this.name,
+      this._name,
       style: Theme.of(context).textTheme.headline6.copyWith(
             color: Colors.black87,
             fontWeight: FontWeight.w400,
@@ -115,7 +122,7 @@ class _PerfilPageState extends State<PerfilPage> {
   // User ubication
   Text _ubicationHeader(BuildContext context) {
     return Text(
-      this.ubication,
+      this._ubication,
       style: Theme.of(context).textTheme.caption.copyWith(
             fontSize: 14.4,
             fontWeight: FontWeight.w300,

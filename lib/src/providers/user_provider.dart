@@ -20,7 +20,9 @@ class UserProvider {
     if (decodedResp["ok"] == true) {
       print(decodedResp);
       _prefs.token = decodedResp["token"];
-      // TODO: agregar datos a las preferencias
+      _prefs.name = decodedResp["user"]["name"];
+      _prefs.surname = decodedResp["user"]["surname"];
+      _prefs.image = decodedResp["user"]["img"] ?? "";
       return true;
     } else {
       print(decodedResp);

@@ -36,8 +36,12 @@ void showLogOutDialog(BuildContext context, UserPref userPref) {
         FlatButton(
           child: Text("Ok"),
           onPressed: () {
+            // TODO: Borrar esto si se cambia logica por traer desde backend
             userPref.token = "";
-            Navigator.pushReplacementNamed(context, "login");
+            userPref.name = "";
+            userPref.surname = "";
+            userPref.image = "";
+            Navigator.pushNamedAndRemoveUntil(context, "login", (r) => false);
           },
         ),
       ],
