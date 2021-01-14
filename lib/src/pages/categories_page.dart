@@ -1,5 +1,5 @@
 import 'package:agroxpress/src/models/categorie_model.dart';
-import 'package:agroxpress/src/providers/products_provider.dart';
+import 'package:agroxpress/src/providers/categories_provider.dart';
 import 'package:agroxpress/src/utils/styles.dart';
 import 'package:agroxpress/src/utils/utils.dart';
 import 'package:flutter/material.dart';

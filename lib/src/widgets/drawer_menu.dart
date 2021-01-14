@@ -148,11 +148,11 @@ class DrawerMenu extends StatelessWidget {
         // Drawer options menu
         _optInicio(),
         _optBuscar(context),
-        _optNotificaciones(),
-        _optCompras(),
-        _optFavoritos(),
+        _optNotificaciones(context),
+        _optCompras(context),
+        _optFavoritos(context),
         _optPerfil(context),
-        _optVender(),
+        _optVender(context),
         Divider(
           color: kDividerColor,
           height: kDividerHeight,
@@ -202,11 +202,11 @@ class DrawerMenu extends StatelessWidget {
     );
   }
 
-  ListTileDrawer _optVender() {
+  ListTileDrawer _optVender(BuildContext context) {
     return ListTileDrawer(
       title: "Vender",
       icon: kSellIcon,
-      onTapTile: () => print("Vender"),
+      onTapTile: () => Navigator.pushNamed(context, "create-publication"),
     );
   }
 
@@ -218,27 +218,27 @@ class DrawerMenu extends StatelessWidget {
     );
   }
 
-  ListTileDrawer _optFavoritos() {
+  ListTileDrawer _optFavoritos(BuildContext context) {
     return ListTileDrawer(
       title: "Favoritos",
       icon: kFavoritesIcon,
-      onTapTile: () => print("Favoritos"),
+      onTapTile: () => Navigator.pushNamed(context, "favorites"),
     );
   }
 
-  ListTileDrawer _optCompras() {
+  ListTileDrawer _optCompras(BuildContext context) {
     return ListTileDrawer(
       title: "Mis compras",
       icon: kShoppingIcon,
-      onTapTile: () => print("Mis compras"),
+      onTapTile: () => Navigator.pushNamed(context, "shopping"),
     );
   }
 
-  ListTileDrawer _optNotificaciones() {
+  ListTileDrawer _optNotificaciones(BuildContext context) {
     return ListTileDrawer(
       title: "Notificaciones",
       icon: kNotificationsIcon,
-      onTapTile: () => print("Notificaciones"),
+      onTapTile: () => Navigator.pushNamed(context, "notifications"),
     );
   }
 

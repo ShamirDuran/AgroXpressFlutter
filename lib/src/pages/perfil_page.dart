@@ -15,6 +15,9 @@ class _PerfilPageState extends State<PerfilPage> {
   String _name;
   String _image;
 
+  // TODO: Obtener datos desde petcicion al backend - cambiar ubicacion
+  final String _ubication = "Santander, Bucaramanga";
+
   @override
   void initState() {
     super.initState();
@@ -22,9 +25,6 @@ class _PerfilPageState extends State<PerfilPage> {
     _name = _userPref.name;
     _image = _userPref.image;
   }
-
-  // TODO: Obtener datos desde petcicion al backend - cambiar ubicacion
-  final String _ubication = "Santander, Bucaramanga";
 
   // Actions menu
   final List<Map<String, dynamic>> actionsList = [
