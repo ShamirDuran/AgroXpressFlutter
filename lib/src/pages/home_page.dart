@@ -2,6 +2,7 @@ import 'package:agroxpress/src/models/publications_model.dart';
 import 'package:agroxpress/src/providers/publications_provider.dart';
 import 'package:agroxpress/src/search/search_delegate.dart';
 import 'package:agroxpress/src/utils/utils.dart';
+import 'package:agroxpress/src/widgets/carousel.dart';
 import 'package:agroxpress/src/widgets/drawer_menu.dart';
 import 'package:flutter/material.dart';
 
@@ -16,6 +17,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    _publicationsProvider.getAllPublications();
+
     return Scaffold(
       key: _scaffoldKey,
       appBar: _buildAppBar(),
@@ -47,20 +50,14 @@ class _HomePageState extends State<HomePage> {
   Widget _searchAppBar() {
     final searchWidget = Container(
       alignment: Alignment.topLeft,
-      padding: EdgeInsets.symmetric(
-        vertical: 6,
-        horizontal: 10.0,
-      ),
+      padding: EdgeInsets.symmetric(vertical: 6, horizontal: 10.0),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(30.0),
       ),
       child: Row(
         children: [
-          Icon(
-            Icons.search_outlined,
-            color: Colors.grey[400],
-          ),
+          Icon(Icons.search_outlined, color: Colors.grey[400]),
           SizedBox(width: 5.0),
           Text(
             "Buscar productos",
@@ -92,6 +89,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  // Publications on offer
   Widget _offer() {
     return Container(
       width: double.infinity,
@@ -100,68 +98,18 @@ class _HomePageState extends State<HomePage> {
         children: [
           Text(
             "Oferta",
-            style: TextStyle(
-              fontSize: 18.0,
-            ),
+            style: TextStyle(fontSize: 18.0),
           ),
           sb(10),
-          // FutureBuilder(
-          //   future: _publicationsProvider.getOfferPublications(),
-          //   builder: (BuildContext context,
-          //       AsyncSnapshot<List<PublicationModel>> snapshot) {
-          //     if (snapshot.hasData) {
-          //       return _cardItem();
-          //     } else {
-          //       return CircularProgressIndicator();
-          //     }
-          //   },
-          // ),
-        ],
-      ),
-    );
-  }
-
-  Widget _cardItem() {
-    return Container(
-      width: 150.0,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(5.0),
-            child: FadeInImage(
-              placeholder: AssetImage("assets/images/image-placeholder.png"),
-              image: NetworkImage(
-                  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTuzUA0ySIB1K-zP-A5jZSv35tB-lBXztVz3A&usqp=CAU"),
-              fadeInDuration: Duration(milliseconds: 300),
-              fit: BoxFit.cover,
-              width: 150.0,
-              height: 200.0,
-            ),
-          ),
-          sb(5.0),
-          Text(
-            "Papa criolla",
-            textAlign: TextAlign.start,
-            overflow: TextOverflow.visible,
-            style: TextStyle(fontSize: 15.0),
-          ),
-          sb(1.0),
-          Text(
-            "Bucaramanga, Santander",
-            textAlign: TextAlign.start,
-            overflow: TextOverflow.visible,
-            style: Theme.of(context).textTheme.caption,
-          ),
-          sb(5.0),
-          Align(
-            alignment: Alignment.bottomRight,
-            child: Text(
-              "\$ 2.000 /kg",
-              style: TextStyle(
-                fontSize: 16.0,
-              ),
-            ),
+          FutureBuilder(
+            future: _publicationsProvider.getAllPublications(),
+            builder: (context, AsyncSnapshot<List<PublicationModel>> snapshot) {
+              if (snapshot.hasData) {
+                return Carousel(snapshot.data);
+              } else {
+                return CircularProgressIndicator();
+              }
+            },
           ),
         ],
       ),

@@ -4,6 +4,18 @@
 
 import 'dart:convert';
 
+class Publications {
+  List<PublicationModel> items = List();
+
+  Publications();
+
+  Publications.fromJsonList(List<dynamic> jsonList) {
+    if (jsonList == null) return;
+    items.addAll(
+        jsonList.map((item) => PublicationModel.fromJson(item)).toList());
+  }
+}
+
 PublicationModel publicationModelFromJson(String str) =>
     PublicationModel.fromJson(json.decode(str));
 
@@ -40,8 +52,10 @@ class PublicationModel {
   int recurrence;
   String productLocation;
   int qualification;
-  DateTime createdAt;
-  DateTime updatedAt;
+  String createdAt;
+  String updatedAt;
+  // DateTime createdAt = "";
+  // DateTime updatedAt = "";
 
   factory PublicationModel.fromJson(Map<String, dynamic> json) =>
       PublicationModel(
@@ -58,8 +72,10 @@ class PublicationModel {
         recurrence: json["recurrence"] ?? 0,
         productLocation: json["product_location"] ?? "Locación no especificada",
         qualification: json["qualification"] ?? 0,
-        createdAt: DateTime.parse(json["createdAt"]) ?? "",
-        updatedAt: DateTime.parse(json["updatedAt"]) ?? "",
+        // createdAt: String.tryParse(json["createdAt"]) ?? "",
+        // updatedAt: String.tryParse(json["updatedAt"]) ?? "",
+        createdAt: json["createdAt"] ?? "",
+        updatedAt: json["updatedAt"] ?? "",
       );
 
   Map<String, dynamic> toJson() => {
@@ -75,7 +91,9 @@ class PublicationModel {
         "product_location": productLocation,
         "qualification": qualification,
         "user": user,
-        "createdAt": createdAt.toIso8601String(),
-        "updatedAt": updatedAt.toIso8601String(),
+        // "createdAt": createdAt.toIso8601String(),
+        // "updatedAt": updatedAt.toIso8601String(),
+        "createdAt": createdAt,
+        "updatedAt": updatedAt,
       };
 }
