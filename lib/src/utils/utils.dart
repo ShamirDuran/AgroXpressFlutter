@@ -1,3 +1,4 @@
+import 'package:agroxpress/src/models/publications_model.dart';
 import 'package:agroxpress/src/utils/user_prefs.dart';
 import 'package:flutter/material.dart';
 
@@ -47,4 +48,13 @@ void showLogOutDialog(BuildContext context, UserPref userPref) {
       ],
     ),
   );
+}
+
+String getUnit(PublicationModel publication) {
+  if (publication.measurementUnit.length < 4)
+    return publication.measurementUnit;
+
+  final temp = publication.measurementUnit.split(" ")[1];
+
+  return temp.substring(1, temp.length - 1);
 }
