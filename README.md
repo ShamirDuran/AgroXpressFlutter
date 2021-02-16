@@ -1,5 +1,9 @@
-# Agroxpress
+# AgroXpress
 
-Aplicación para conectar a los campesinos con poteniales compradores
+AgroXpress is a mobile application that help to the Colombian farmers. 
 
-*En desarrollo*
+### Created by: 
+
+- Shamir Duran
+- Jair Niño  
+- Jonathan Buitrago 
