@@ -105,7 +105,7 @@ class _HomePageState extends State<HomePage> {
             future: future,
             builder: (context, AsyncSnapshot<List<PublicationModel>> snapshot) {
               if (snapshot.hasData) {
-                return Carousel(snapshot.data);
+                return Carousel(snapshot.data, _scaffoldKey);
               } else {
                 return Center(
                   child: Padding(

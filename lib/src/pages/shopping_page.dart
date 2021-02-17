@@ -21,6 +21,7 @@ class ShoppingPage extends StatelessWidget {
                 width: MediaQuery.of(context).size.width * 0.75,
                 child: Text(
                   "Aqui puedes ver el historial de las compras que has realizado",
+                  textAlign: TextAlign.center,
                 ),
               ),
             )

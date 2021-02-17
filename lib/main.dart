@@ -1,18 +1,20 @@
+import 'dart:io';
+
 import 'package:agroxpress/src/pages/categories_page.dart';
 import 'package:agroxpress/src/pages/create_publication/create_pub.dart';
 import 'package:agroxpress/src/pages/create_publication/create_pub_details.dart';
 import 'package:agroxpress/src/pages/create_publication/create_pub_location.dart';
 import 'package:agroxpress/src/pages/favorites_page.dart';
 import 'package:agroxpress/src/pages/home_page.dart';
+import 'package:agroxpress/src/pages/login_page.dart';
 import 'package:agroxpress/src/pages/notifications_page.dart';
 import 'package:agroxpress/src/pages/perfil_page.dart';
 import 'package:agroxpress/src/pages/publication_page.dart';
+import 'package:agroxpress/src/pages/register_page.dart';
 import 'package:agroxpress/src/pages/shopping_page.dart';
+import 'package:agroxpress/src/utils/user_prefs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:agroxpress/src/pages/login_page.dart';
-import 'package:agroxpress/src/pages/register_page.dart';
-import 'package:agroxpress/src/utils/user_prefs.dart';
 
 void main() async {
   // User preferences
@@ -40,6 +42,8 @@ class MyApp extends StatelessWidget {
     final _prefs = new UserPref();
     print('token: ${_prefs.token}');
 
+    HttpOverrides.global = new MyHttpOverrides();
+
     return MaterialApp(
       theme: ThemeData(
         primaryColor: Colors.indigoAccent,
@@ -63,5 +67,14 @@ class MyApp extends StatelessWidget {
         "publication": (_) => PublicationPage(),
       },
     );
+  }
+}
+
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
   }
 }

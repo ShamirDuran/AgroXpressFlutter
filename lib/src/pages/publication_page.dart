@@ -54,7 +54,7 @@ class _PublicationPageState extends State<PublicationPage> {
       children: [
         FadeInImage(
           placeholder: AssetImage("assets/images/image-placeholder.png"),
-          image: NetworkImage(publication.image.length > 10
+          image: NetworkImage(publication.image.length > 20
               ? publication.image
               : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTuzUA0ySIB1K-zP-A5jZSv35tB-lBXztVz3A&usqp=CAU"),
           fit: BoxFit.cover,

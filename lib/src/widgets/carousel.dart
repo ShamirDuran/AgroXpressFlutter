@@ -1,12 +1,15 @@
 import 'package:agroxpress/src/models/publications_model.dart';
+import 'package:agroxpress/src/utils/user_prefs.dart';
 import 'package:agroxpress/src/utils/utils.dart';
 import 'package:agroxpress/src/widgets/price_badge.dart';
 import 'package:flutter/material.dart';
 
 class Carousel extends StatelessWidget {
   final List<PublicationModel> data;
+  final GlobalKey<ScaffoldState> _key;
+  final _pref = UserPref();
 
-  Carousel(this.data);
+  Carousel(this.data, this._key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +29,12 @@ class Carousel extends StatelessWidget {
     final imageWidth = 125.0;
     final imageHeight = 175.0;
     return GestureDetector(
-      onTap: () => Navigator.pushNamed(context, "publication",
-          arguments: publication.id),
+      onTap: () => _pref.token == ""
+          ? showSnackBar(
+              "Debe loguearse para mirar los detalles de las publicaciones",
+              _key)
+          : Navigator.pushNamed(context, "publication",
+              arguments: publication.id),
       child: Container(
         width: imageWidth,
         margin: EdgeInsets.only(right: 15.0),
