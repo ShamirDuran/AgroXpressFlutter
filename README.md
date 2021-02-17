@@ -8,7 +8,8 @@ AgroXpress is a mobile application that help to the Colombian farmers.
 - Jair Niño  
 - Jonathan Buitrago 
 
-***EN DESARROLLO***
+
+# -------- EN DESARROLLO --------
 
 ## Vistas
 
