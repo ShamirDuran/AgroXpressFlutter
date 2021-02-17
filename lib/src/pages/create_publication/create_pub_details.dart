@@ -1,5 +1,6 @@
 import 'package:agroxpress/src/models/publications_model.dart';
 import 'package:agroxpress/src/utils/utils.dart';
+import 'package:agroxpress/src/widgets/full_width_button.dart';
 import 'package:agroxpress/src/widgets/create_pub_input.dart';
 import 'package:agroxpress/src/widgets/create_pub_title.dart';
 import 'package:flutter/material.dart';
@@ -135,37 +136,16 @@ class _CreatePubDetailsState extends State<CreatePubDetails> {
                   ),
                   sb(20),
                   Expanded(child: Text("")),
-                  _continueButton(),
+                  FullWidthButton(
+                    clickHandler: _checkAvailableunits && _priceCheck
+                        ? __navigateThirdStep
+                        : null,
+                    title: "Continuar",
+                  )
                 ],
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-
-  Widget _continueButton() {
-    return Container(
-      width: double.infinity,
-      margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-      child: RaisedButton(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(4.0),
-        ),
-        color: Theme.of(context).primaryColor,
-        onPressed: _checkAvailableunits && _priceCheck
-            ? () => __navigateThirdStep()
-            : null,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 15.0),
-          child: Text(
-            "Continuar",
-            style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w300,
-                fontSize: 17.0),
-          ),
         ),
       ),
     );

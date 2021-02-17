@@ -3,6 +3,7 @@ import 'package:agroxpress/src/providers/publications_provider.dart';
 import 'package:agroxpress/src/utils/utils.dart';
 import 'package:agroxpress/src/widgets/create_pub_input.dart';
 import 'package:agroxpress/src/widgets/create_pub_title.dart';
+import 'package:agroxpress/src/widgets/full_width_button.dart';
 import 'package:flutter/material.dart';
 
 class CreatePubLocation extends StatefulWidget {
@@ -73,35 +74,13 @@ class _CreatePubLocationState extends State<CreatePubLocation> {
                     maxLength: 30,
                   ),
                   Expanded(child: Text("")),
-                  _continueButton(),
+                  FullWidthButton(
+                      clickHandler: _checkLocation ? _createPub : null,
+                      title: "Continuar"),
                 ],
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-
-  Widget _continueButton() {
-    return Container(
-      width: double.infinity,
-      margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-      child: RaisedButton(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(4.0),
-        ),
-        color: Theme.of(context).primaryColor,
-        onPressed: _checkLocation ? () => _createPub() : null,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 15.0),
-          child: Text(
-            "Continuar",
-            style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w300,
-                fontSize: 17.0),
-          ),
         ),
       ),
     );

@@ -25,13 +25,10 @@ class PublicationsProvider {
 
     Map<String, dynamic> decodedResp = json.decode(resp.body);
 
-    if (decodedResp["ok"] == true) {
-      // print(decodedResp);
+    if (decodedResp["ok"] == true)
       return true;
-    } else {
-      // print(decodedResp);
+    else
       return decodedResp["err"]["message"];
-    }
   }
 
   Future<List<PublicationModel>> getAllPublications() async {

@@ -2,6 +2,7 @@ import 'package:agroxpress/src/models/publications_model.dart';
 import 'package:agroxpress/src/utils/utils.dart';
 import 'package:agroxpress/src/widgets/create_pub_input.dart';
 import 'package:agroxpress/src/widgets/create_pub_title.dart';
+import 'package:agroxpress/src/widgets/full_width_button.dart';
 import 'package:flutter/material.dart';
 
 class CreatePublication extends StatefulWidget {
@@ -94,37 +95,16 @@ class _CreatePublicationState extends State<CreatePublication> {
                     helper: "Mínimo 10 caracteres",
                   ),
                   Expanded(child: Text("")),
-                  _continueButton(),
+                  FullWidthButton(
+                    clickHandler: _nameCheck && _descriptionCheck
+                        ? _navigateSecondStep
+                        : null,
+                    title: "Continuar",
+                  ),
                 ],
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-
-  Widget _continueButton() {
-    return Container(
-      width: double.infinity,
-      margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-      child: RaisedButton(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(4.0),
-        ),
-        color: Theme.of(context).primaryColor,
-        onPressed: _nameCheck && _descriptionCheck
-            ? () => _navigateSecondStep()
-            : null,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 15.0),
-          child: Text(
-            "Continuar",
-            style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w300,
-                fontSize: 17.0),
-          ),
         ),
       ),
     );
