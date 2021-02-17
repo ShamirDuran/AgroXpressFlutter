@@ -48,6 +48,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Colors.indigoAccent,
         disabledColor: Colors.indigo[200],
+        fontFamily: "Lato",
       ),
       debugShowCheckedModeBanner: false,
       title: 'AgroXpress',

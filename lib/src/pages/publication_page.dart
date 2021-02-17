@@ -1,6 +1,7 @@
 import 'package:agroxpress/src/models/publications_model.dart';
 import 'package:agroxpress/src/providers/publications_provider.dart';
 import 'package:agroxpress/src/utils/utils.dart';
+import 'package:agroxpress/src/widgets/circle_image.dart';
 import 'package:agroxpress/src/widgets/price_badge.dart';
 import 'package:flutter/material.dart';
 
@@ -38,7 +39,7 @@ class _PublicationPageState extends State<PublicationPage> {
         builder:
             (BuildContext context, AsyncSnapshot<PublicationModel> snapshot) {
           if (snapshot.hasData) {
-            return _pub(snapshot.data);
+            return _publicationBody(snapshot.data);
           } else {
             return Center(
               child: CircularProgressIndicator(),
@@ -49,9 +50,10 @@ class _PublicationPageState extends State<PublicationPage> {
     );
   }
 
-  Widget _pub(PublicationModel publication) {
+  Widget _publicationBody(PublicationModel publication) {
     return ListView(
       children: [
+        // Publication images
         FadeInImage(
           placeholder: AssetImage("assets/images/image-placeholder.png"),
           image: NetworkImage(publication.image.length > 20
@@ -61,51 +63,15 @@ class _PublicationPageState extends State<PublicationPage> {
           fadeInDuration: Duration(milliseconds: 200),
           height: 220.0,
         ),
-        Container(
-          padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0),
-          color: Colors.grey[100],
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 5.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    _location(publication),
-                    _qualification(publication)
-                  ],
-                ),
-              ),
-              SizedBox(height: 15.0),
-              _header(publication),
-              SizedBox(height: 15.0),
-            ],
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Descripción",
-                style: TextStyle(fontSize: 18.0),
-              ),
-              SizedBox(height: 5.0),
-              Text(
-                publication.description,
-                style: TextStyle(fontWeight: FontWeight.w300, fontSize: 14.0),
-              )
-            ],
-          ),
-        )
+
+        _headerPublication(publication),
+        _infoPublication(publication),
       ],
     );
   }
 
-  Widget _header(PublicationModel publication) {
-    return Row(
+  Widget _headerPublication(PublicationModel publication) {
+    final _header = Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -116,11 +82,12 @@ class _PublicationPageState extends State<PublicationPage> {
               Text(
                 publication.name,
                 overflow: TextOverflow.visible,
-                style: TextStyle(fontSize: 27.0, fontWeight: FontWeight.w600),
+                style: TextStyle(
+                    fontSize: 25.0, fontWeight: FontWeight.bold, height: 1.05),
               ),
-              SizedBox(width: 5.0),
-              // TODO: poner fecha desde backend
+              SizedBox(height: 5.0),
               Text(
+                // TODO: poner fecha desde backend
                 "Publicado el 14/12/2020",
                 style: Theme.of(context).textTheme.caption,
               ),
@@ -131,23 +98,71 @@ class _PublicationPageState extends State<PublicationPage> {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // Publication price
             PriceBadge(
               text:
                   "\$ ${publication.unitPrice.toString()} ${getUnit(publication)}",
-              radius: 10.0,
-              size: 17.0,
+              radius: 50.0,
               pHor: 10.0,
-              pVer: 7.6,
-              weight: FontWeight.w300,
+              pVer: 7.0,
+              size: 16.0,
+              weight: FontWeight.w500,
             ),
-            SizedBox(height: 6.0),
+            sb(6),
+            // Publication available amount
             Text(
               "${getUnit(publication)} disponibles: ${publication.availableUnits.split(" ")[0]}",
-              style: TextStyle(fontWeight: FontWeight.w300),
+              style: TextStyle(
+                fontWeight: FontWeight.w300,
+                fontSize: 13.8,
+                fontStyle: FontStyle.italic,
+              ),
             ),
           ],
         )
       ],
+    );
+
+    return // Publication title, date, price, qualification
+        Container(
+      padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0),
+      color: Color(0xffEFEFEF),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 5.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [_location(publication), _qualification(publication)],
+            ),
+          ),
+          sb(15),
+          _header,
+          sb(15),
+        ],
+      ),
+    );
+  }
+
+  Widget _infoPublication(PublicationModel publication) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _titleSection("Descripción"),
+          Text(
+            publication.description,
+            style: TextStyle(fontWeight: FontWeight.w300, fontSize: 15.0),
+          ),
+          sb(25),
+          _titleSection("Información del vendedor"),
+          _ownerInfo(),
+          sb(25),
+          _titleSection("Métodos de pago"),
+        ],
+      ),
     );
   }
 
@@ -174,6 +189,28 @@ class _PublicationPageState extends State<PublicationPage> {
           publication.productLocation,
           style: TextStyle(fontWeight: FontWeight.w300, fontSize: 13.0),
         ),
+      ],
+    );
+  }
+
+  Widget _titleSection(String title) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 5.0),
+      child: Text(
+        title,
+        style: TextStyle(fontSize: 18.4, fontWeight: FontWeight.w500),
+      ),
+    );
+  }
+
+  Widget _ownerInfo() {
+    return Column(
+      children: [
+        sb(5),
+        Center(
+            child: CircleImage(width: 80, height: 80, imgUrl: "", radius: 100)),
+        sb(5),
+        Text("Pepito Perez", style: TextStyle(fontWeight: FontWeight.w300)),
       ],
     );
   }

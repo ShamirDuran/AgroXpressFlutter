@@ -31,9 +31,10 @@ class PriceBadge extends StatelessWidget {
             child: Text(
               this.text,
               style: TextStyle(
-                  fontSize: this.size,
-                  fontWeight: this.weight,
-                  color: Colors.white),
+                fontSize: this.size,
+                fontWeight: this.weight,
+                color: Colors.white,
+              ),
             ),
           ),
         ),
