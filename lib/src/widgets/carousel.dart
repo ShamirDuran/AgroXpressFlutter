@@ -5,22 +5,51 @@ import 'package:agroxpress/src/widgets/price_badge.dart';
 import 'package:flutter/material.dart';
 
 class Carousel extends StatelessWidget {
-  final List<PublicationModel> data;
+  final List<PublicationModel> _data;
   final GlobalKey<ScaffoldState> _key;
+  final String _title, _route;
   final _pref = UserPref();
 
-  Carousel(this.data, this._key);
+  Carousel(
+    this._data,
+    this._key,
+    this._title,
+    this._route,
+  );
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 275.0,
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        physics: BouncingScrollPhysics(),
-        itemCount: data.length,
-        itemBuilder: (BuildContext context, int index) =>
-            _card(context, data[index]),
+      width: double.infinity,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(this._title, style: TextStyle(fontSize: 18.0)),
+              IconButton(
+                icon: Icon(Icons.arrow_forward_outlined),
+                onPressed: () => Navigator.pushNamedAndRemoveUntil(
+                    context, this._route, (route) => false),
+                splashRadius: 20,
+                iconSize: 20,
+              )
+            ],
+          ),
+          sb(1),
+          Container(
+            height: 275.0,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              physics: BouncingScrollPhysics(),
+              itemCount: _data.length,
+              itemBuilder: (BuildContext context, int index) =>
+                  _card(context, _data[index]),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -56,7 +85,7 @@ class Carousel extends StatelessWidget {
               ),
             ),
             sb(5.0),
-            // Title
+            // _title
             Text(
               publication.name,
               textAlign: TextAlign.start,

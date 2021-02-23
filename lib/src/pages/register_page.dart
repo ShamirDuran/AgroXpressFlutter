@@ -181,7 +181,6 @@ class _RegisterPageState extends State<RegisterPage> {
       Navigator.pushNamedAndRemoveUntil(context, "login", (r) => false);
     } else {
       showSnackBar(resp, _scaffoldKey);
-      // TODO: Add error to stream
     }
   }
 }

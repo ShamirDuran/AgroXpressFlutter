@@ -1,7 +1,6 @@
 import 'package:agroxpress/src/models/publications_model.dart';
 import 'package:agroxpress/src/providers/publications_provider.dart';
 import 'package:agroxpress/src/search/search_delegate.dart';
-import 'package:agroxpress/src/utils/utils.dart';
 import 'package:agroxpress/src/widgets/carousel.dart';
 import 'package:agroxpress/src/widgets/drawer_menu.dart';
 import 'package:flutter/material.dart';
@@ -81,39 +80,47 @@ class _HomePageState extends State<HomePage> {
       padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
       child: ListView(
         children: [
-          _carousel("Oferta", _publicationsProvider.getAllPublications()),
-          _carousel("Más vendidos", _publicationsProvider.getAllPublications()),
-          _carousel("Nuevos", _publicationsProvider.getAllPublications()),
-        ],
-      ),
-    );
-  }
-
-  // Publications on offer
-  Widget _carousel(String title, Future<List<PublicationModel>> future) {
-    return Container(
-      width: double.infinity,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: TextStyle(fontSize: 18.0),
-          ),
-          sb(10),
           FutureBuilder(
             future: _publicationsProvider.getAllPublications(),
             builder: (context, AsyncSnapshot<List<PublicationModel>> snapshot) {
-              if (snapshot.hasData) {
-                return Carousel(snapshot.data, _scaffoldKey);
-              } else {
+              if (snapshot.hasData)
+                return Carousel(snapshot.data, _scaffoldKey, "Oferta", "home");
+              else
                 return Center(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 70.0),
                     child: CircularProgressIndicator(),
                   ),
                 );
-              }
+            },
+          ),
+          FutureBuilder(
+            future: _publicationsProvider.getAllPublications(),
+            builder: (context, AsyncSnapshot<List<PublicationModel>> snapshot) {
+              if (snapshot.hasData)
+                return Carousel(
+                    snapshot.data, _scaffoldKey, "Más vendidos", "home");
+              else
+                return Center(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 70.0),
+                    child: CircularProgressIndicator(),
+                  ),
+                );
+            },
+          ),
+          FutureBuilder(
+            future: _publicationsProvider.getAllPublications(),
+            builder: (context, AsyncSnapshot<List<PublicationModel>> snapshot) {
+              if (snapshot.hasData)
+                return Carousel(snapshot.data, _scaffoldKey, "Nuevos", "home");
+              else
+                return Center(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 70.0),
+                    child: CircularProgressIndicator(),
+                  ),
+                );
             },
           ),
         ],

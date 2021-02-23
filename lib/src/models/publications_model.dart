@@ -1,6 +1,6 @@
 // To parse this JSON data, do
 //
-//     final publicationModel = publicationModelFromJson(jsonString);
+//     final publicationModel = publicationModelFromMap(jsonString);
 
 import 'dart:convert';
 
@@ -16,11 +16,11 @@ class Publications {
   }
 }
 
-PublicationModel publicationModelFromJson(String str) =>
+PublicationModel publicationModelFromMap(String str) =>
     PublicationModel.fromJson(json.decode(str));
 
-String publicationModelToJson(PublicationModel data) =>
-    json.encode(data.toJson());
+String publicationModelToMap(PublicationModel data) =>
+    json.encode(data.toMap());
 
 String publicationModelToJsonRegister(PublicationModel data) =>
     json.encode(data.toJsonRegister());
@@ -28,76 +28,65 @@ String publicationModelToJsonRegister(PublicationModel data) =>
 class PublicationModel {
   PublicationModel({
     this.id,
-    this.user,
+    this.authorId,
+    this.productId,
     this.name,
     this.description,
-    this.image,
-    this.product,
+    // this.creationDate,
+    this.recurrence,
     this.availableUnits,
     this.measurementUnit,
     this.unitPrice,
-    this.recurrence,
     this.productLocation,
-    this.qualification,
-    this.createdAt,
-    this.updatedAt,
+    this.totalVotes,
+    this.image,
   });
 
   String id;
-  String user;
+  String authorId;
+  String productId;
   String name;
   String description;
-  String image;
-  String product;
-  String availableUnits;
+  // DateTime creationDate;
+  int recurrence;
+  int availableUnits;
   String measurementUnit;
   int unitPrice;
-  int recurrence;
   String productLocation;
-  int qualification;
-  String createdAt;
-  String updatedAt;
-  // DateTime createdAt = "";
-  // DateTime updatedAt = "";
+  int totalVotes;
+  String image;
 
   factory PublicationModel.fromJson(Map<String, dynamic> json) =>
       PublicationModel(
-        id: json["id"] ?? "NN",
-        user: json["user"] ?? "NN",
+        id: json["id"],
+        authorId: json["author_id"],
+        productId: json["product_id"],
         name: json["name"],
-        description: json["description"] ?? "",
-        image: json["image"] ??
-            "https://www.cvn.com.co/wp-content/uploads/2018/09/papa-criolla.jpg",
-        product: json["product"] ?? "NN",
+        description: json["description"],
+        // creationDate: DateTime.parse(json["creation_date"]) ,
+        recurrence: json["recurrence"],
         availableUnits: json["available_units"],
-        measurementUnit: json["measurement_unit"] ?? "",
+        measurementUnit: json["measurement_unit"],
         unitPrice: json["unit_price"],
-        recurrence: json["recurrence"] ?? 0,
-        productLocation: json["product_location"] ?? "Locación no especificada",
-        qualification: json["qualification"] ?? 0,
-        // createdAt: String.tryParse(json["createdAt"]) ?? "",
-        // updatedAt: String.tryParse(json["updatedAt"]) ?? "",
-        createdAt: json["createdAt"] ?? "",
-        updatedAt: json["updatedAt"] ?? "",
+        productLocation: json["product_location"],
+        totalVotes: json["total_votes"],
+        image: json["image"],
       );
 
-  Map<String, dynamic> toJson() => {
-        "image": image,
-        "product": product,
-        "_id": id,
+  Map<String, dynamic> toMap() => {
+        "id": id,
+        "author_id": authorId,
+        "product_id": productId,
         "name": name,
         "description": description,
+        // "creation_date": creationDate.toIso8601String(),
         "recurrence": recurrence,
         "available_units": availableUnits,
         "measurement_unit": measurementUnit,
         "unit_price": unitPrice,
         "product_location": productLocation,
-        "qualification": qualification,
-        "user": user,
-        // "createdAt": createdAt.toIso8601String(),
-        // "updatedAt": updatedAt.toIso8601String(),
-        "createdAt": createdAt,
-        "updatedAt": updatedAt,
+        "total_votes": totalVotes,
+        "image": image,
       };
 
   Map<String, dynamic> toJsonRegister() => {
@@ -108,7 +97,7 @@ class PublicationModel {
         "measurement_unit": measurementUnit,
         "unit_price": unitPrice,
         "product_location": productLocation,
-        "qualification": qualification,
-        "product": product,
+        "qualification": totalVotes,
+        "product": productId,
       };
 }

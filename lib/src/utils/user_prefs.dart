@@ -12,9 +12,6 @@ class UserPref {
     this._prefs = await SharedPreferences.getInstance();
   }
 
-  // TODO: Pensar si es mejor pedir datos del usuario por get, en lugar de por preferencias
-  // TODO: Guardar id del usuario para realizar petición de datos
-
   // Getters
   get token => _prefs.getString("token") ?? "";
   get name => _prefs.getString("name") ?? "";

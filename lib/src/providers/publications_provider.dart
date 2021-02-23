@@ -11,8 +11,8 @@ class PublicationsProvider {
   Future<bool> createPublication(PublicationModel publication) async {
     // Eliminar este
     publication.recurrence = 0;
-    publication.qualification = 0;
-    publication.product = "Sin especificar";
+    publication.totalVotes = 0;
+    publication.productId = "Sin especificar";
 
     final resp = await http.post(
       "$_url/api/farmer/create_publication",

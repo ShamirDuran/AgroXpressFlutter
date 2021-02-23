@@ -95,11 +95,11 @@ class _PublicationPageState extends State<PublicationPage> {
             ],
           ),
         ),
-        SizedBox(width: 15.0),
+        SizedBox(width: 13.0),
         Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // Publication price
+            // Publicacion - precio por unidad
             PriceBadge(
               text:
                   "\$ ${publication.unitPrice.toString()} ${getUnit(publication)}",
@@ -110,9 +110,9 @@ class _PublicationPageState extends State<PublicationPage> {
               weight: FontWeight.w500,
             ),
             sb(6),
-            // Publication available amount
+            // Publicacion - unidades disponibles
             Text(
-              "${getUnit(publication)} disponibles: ${publication.availableUnits.split(" ")[0]}",
+              "Disponibles: ${publication.availableUnits.toString()}",
               style: TextStyle(
                 fontWeight: FontWeight.w300,
                 fontSize: 13.8,
@@ -138,7 +138,7 @@ class _PublicationPageState extends State<PublicationPage> {
               children: [_location(publication), _qualification(publication)],
             ),
           ),
-          sb(15),
+          sb(12),
           _header,
           sb(15),
         ],
@@ -177,7 +177,7 @@ class _PublicationPageState extends State<PublicationPage> {
         Align(
           alignment: Alignment.center,
           child: Text(
-            publication.qualification.toString(),
+            publication.totalVotes.toString(),
             style: TextStyle(fontWeight: FontWeight.w300, fontSize: 13.0),
           ),
         ),

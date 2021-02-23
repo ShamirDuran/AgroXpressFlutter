@@ -153,10 +153,9 @@ class _CreatePubDetailsState extends State<CreatePubDetails> {
 
   __navigateThirdStep() {
     _publication.measurementUnit = _currentUnit;
-    _publication.availableUnits = _availableUnitsController.text;
+    _publication.availableUnits = int.parse(_availableUnitsController.text);
     _publication.unitPrice = int.parse(_priceController.text);
 
-    // TODO: Pernsar si cambiar ruta a mapa mejor
     Navigator.pushNamed(
       context,
       "create-pub-location",
