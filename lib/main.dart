@@ -12,6 +12,7 @@ import 'package:agroxpress/src/pages/perfil_page.dart';
 import 'package:agroxpress/src/pages/publication_page.dart';
 import 'package:agroxpress/src/pages/register_page.dart';
 import 'package:agroxpress/src/pages/shopping_page.dart';
+import 'package:agroxpress/src/pages/test_page.dart';
 import 'package:agroxpress/src/utils/user_prefs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -52,7 +53,7 @@ class MyApp extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
       title: 'AgroXpress',
-      initialRoute: "home",
+      initialRoute: "test",
       routes: {
         "home": (_) => HomePage(),
         "login": (_) => LoginPage(),
@@ -66,6 +67,7 @@ class MyApp extends StatelessWidget {
         "create-pub-details": (_) => CreatePubDetails(),
         "create-pub-location": (_) => CreatePubLocation(),
         "publication": (_) => PublicationPage(),
+        "test": (_) => TestPage(),
       },
     );
   }

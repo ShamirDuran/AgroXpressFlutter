@@ -2,6 +2,7 @@ import 'package:agroxpress/src/models/publications_model.dart';
 import 'package:agroxpress/src/providers/publications_provider.dart';
 import 'package:agroxpress/src/utils/utils.dart';
 import 'package:agroxpress/src/widgets/circle_image.dart';
+import 'package:agroxpress/src/widgets/full_width_button.dart';
 import 'package:agroxpress/src/widgets/price_badge.dart';
 import 'package:flutter/material.dart';
 
@@ -161,6 +162,9 @@ class _PublicationPageState extends State<PublicationPage> {
           _ownerInfo(),
           sb(25),
           _titleSection("Métodos de pago"),
+          Image.asset("assets/images/payments.png"),
+          FullWidthButton(
+              clickHandler: () => {print("click")}, title: "Solicitar producto")
         ],
       ),
     );
