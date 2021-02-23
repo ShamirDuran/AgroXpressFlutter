@@ -102,7 +102,7 @@ class _HomePageState extends State<HomePage> {
           ),
           sb(10),
           FutureBuilder(
-            future: future,
+            future: _publicationsProvider.getAllPublications(),
             builder: (context, AsyncSnapshot<List<PublicationModel>> snapshot) {
               if (snapshot.hasData) {
                 return Carousel(snapshot.data, _scaffoldKey);

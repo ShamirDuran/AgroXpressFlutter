@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
       title: 'AgroXpress',
-      initialRoute: "test",
+      initialRoute: "home",
       routes: {
         "home": (_) => HomePage(),
         "login": (_) => LoginPage(),
@@ -67,7 +67,6 @@ class MyApp extends StatelessWidget {
         "create-pub-details": (_) => CreatePubDetails(),
         "create-pub-location": (_) => CreatePubLocation(),
         "publication": (_) => PublicationPage(),
-        "test": (_) => TestPage(),
       },
     );
   }
