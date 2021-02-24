@@ -60,8 +60,6 @@ class UserProvider {
   }
 
   Future<UserModel> getUserData(String id) async {
-    print("id: ${_prefs.id}");
-
     final uri =
         Uri.https("agroxpress.herokuapp.com", "/api/user/get_information", {
       'id_user': id,
