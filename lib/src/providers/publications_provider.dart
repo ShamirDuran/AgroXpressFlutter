@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:agroxpress/src/models/publications_model.dart';
+import 'package:agroxpress/src/models/publication_model.dart';
 import 'package:agroxpress/src/utils/user_prefs.dart';
 import 'package:http/http.dart' as http;
 

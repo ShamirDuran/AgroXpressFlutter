@@ -6,7 +6,7 @@ class Validators {
       if (name.isEmpty) {
         sink.addError("Escriba su nombre");
       } else {
-        if (name.length < 6) {
+        if (name.length < 3) {
           sink.addError("Debe tener almenos 6 caracteres");
         } else {
           sink.add(name);

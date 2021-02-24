@@ -1,4 +1,4 @@
-import 'package:agroxpress/src/models/publications_model.dart';
+import 'package:agroxpress/src/models/publication_model.dart';
 import 'package:agroxpress/src/providers/publications_provider.dart';
 import 'package:agroxpress/src/search/search_delegate.dart';
 import 'package:agroxpress/src/widgets/carousel.dart';

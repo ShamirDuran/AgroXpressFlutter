@@ -4,7 +4,17 @@
 
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
+class Categories {
+  List<CategorieModel> items = List();
+
+  Categories();
+
+  Categories.fromJsonList(List<dynamic> jsonList) {
+    if (jsonList == null) return;
+    items
+        .addAll(jsonList.map((item) => CategorieModel.fromJson(item)).toList());
+  }
+}
 
 CategorieModel categorieModelFromJson(String str) =>
     CategorieModel.fromJson(json.decode(str));
@@ -13,24 +23,24 @@ String categorieModelToJson(CategorieModel data) => json.encode(data.toJson());
 
 class CategorieModel {
   CategorieModel({
-    @required this.id,
-    @required this.name,
-    @required this.image,
+    this.imageUrl,
+    this.id,
+    this.name,
   });
 
+  String imageUrl;
   String id;
   String name;
-  String image;
 
   factory CategorieModel.fromJson(Map<String, dynamic> json) => CategorieModel(
-        id: json["id"],
+        imageUrl: json["imageUrl"],
+        id: json["_id"],
         name: json["name"],
-        image: json["image"],
       );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
+        "imageUrl": imageUrl,
+        "_id": id,
         "name": name,
-        "image": image,
       };
 }

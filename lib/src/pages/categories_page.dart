@@ -10,7 +10,7 @@ class CategoriesPage extends StatefulWidget {
 }
 
 class _CategoriesPageState extends State<CategoriesPage> {
-  final _productsProvider = new ProducsProvider();
+  final _categoriesProvider = new CategoriesProvider();
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
         ),
       ),
       body: FutureBuilder(
-        future: _productsProvider.getCategories(),
+        future: _categoriesProvider.getCategories(),
         builder: (BuildContext context,
             AsyncSnapshot<List<CategorieModel>> snapshot) {
           if (snapshot.hasData) {
@@ -43,11 +43,6 @@ class _CategoriesPageState extends State<CategoriesPage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         sb(5),
-        // Text(
-        //   "Categorias",
-        //   style: kTitleStyle,
-        // ),
-        // sb(15),
         _categoriesList(categories),
         sb(10),
       ],
@@ -95,7 +90,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
           ),
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: NetworkImage(categorie.image),
+              image: NetworkImage(categorie.imageUrl),
               fit: BoxFit.cover,
               colorFilter: ColorFilter.mode(
                 Colors.black45,

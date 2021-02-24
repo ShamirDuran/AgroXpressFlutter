@@ -15,7 +15,6 @@ class CircleImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(this.imgUrl.contains("http"));
     return Container(
       width: this.width,
       height: this.height,

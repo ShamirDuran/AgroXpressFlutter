@@ -1,3 +1,5 @@
+import 'package:agroxpress/src/models/user_model.dart';
+import 'package:agroxpress/src/providers/user_provider.dart';
 import 'package:agroxpress/src/utils/icons.dart';
 import 'package:agroxpress/src/utils/styles.dart';
 import 'package:agroxpress/src/utils/user_prefs.dart';
@@ -5,104 +7,125 @@ import 'package:agroxpress/src/utils/utils.dart';
 import 'package:agroxpress/src/widgets/circle_image.dart';
 import 'package:flutter/material.dart';
 
-class PerfilPage extends StatefulWidget {
-  @override
-  _PerfilPageState createState() => _PerfilPageState();
-}
+// Actions menu
+final List<Map<String, dynamic>> actionsList = [
+  {
+    "title": "Mis compras",
+    "icon": kShoppingIconFilled,
+    "action": "Mis compras",
+  },
+  {
+    "title": "Mis ventas",
+    "icon": kSellIconFilled,
+    "action": "Mis ventas",
+  },
+  {
+    "title": "Mis Publicaciones",
+    "icon": kPublicationsIconFilled,
+    "action": "Mis publicaciones",
+  },
+];
 
-class _PerfilPageState extends State<PerfilPage> {
-  UserPref _userPref;
-  String _name;
-  String _image;
+// Configuration account menu
+final List<Map<String, dynamic>> confAccount = [
+  {
+    "title": "Mi información",
+    "icon": kProfileIconFilled,
+    "action": "Seguridad",
+  },
+  {
+    "title": "Seguridad",
+    "icon": kSecurityIconFilled,
+    "action": "Seguridad",
+  },
+  {
+    "title": "Ayuda",
+    "icon": kHelpIconFilled,
+    "action": "Ayuda",
+  },
+  {
+    "title": "Cerrar sesión",
+    "icon": kLogoutIconFilled,
+    "action": "",
+  },
+];
 
-  // TODO: Obtener datos desde petcicion al backend - cambiar ubicacion
-  final String _ubication = "Santander, Bucaramanga";
-
-  @override
-  void initState() {
-    super.initState();
-    _userPref = UserPref();
-    _name = _userPref.name;
-    _image = _userPref.image;
-  }
-
-  // Actions menu
-  final List<Map<String, dynamic>> actionsList = [
-    {
-      "title": "Mis compras",
-      "icon": kShoppingIconFilled,
-      "action": "Mis compras",
-    },
-    {
-      "title": "Mis ventas",
-      "icon": kSellIconFilled,
-      "action": "Mis ventas",
-    },
-    {
-      "title": "Mis Publicaciones",
-      "icon": kPublicationsIconFilled,
-      "action": "Mis publicaciones",
-    },
-  ];
-
-  // Configuration account menu
-  final List<Map<String, dynamic>> confAccount = [
-    {
-      "title": "Mi información",
-      "icon": kProfileIconFilled,
-      "action": "Seguridad",
-    },
-    {
-      "title": "Seguridad",
-      "icon": kSecurityIconFilled,
-      "action": "Seguridad",
-    },
-    {
-      "title": "Ayuda",
-      "icon": kHelpIconFilled,
-      "action": "Ayuda",
-    },
-    {
-      "title": "Cerrar sesión",
-      "icon": kLogoutIconFilled,
-      "action": "",
-    },
-  ];
+class PerfilPage extends StatelessWidget {
+  final _userProvider = new UserProvider();
+  final _prefs = new UserPref();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: buildAppBar(),
-      body: NotificationListener<OverscrollIndicatorNotification>(
-        onNotification: (overscroll) {
-          overscroll.disallowGlow();
-          return;
+      appBar: buildAppBar(context),
+      body: FutureBuilder(
+        future: _userProvider.getUserData(_prefs.id),
+        builder: (BuildContext context, AsyncSnapshot<UserModel> snapshot) {
+          if (snapshot.hasData)
+            return BuildBody(snapshot.data);
+          else
+            return Center(child: CircularProgressIndicator());
         },
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              sb(25),
-              CircleImage(
-                width: 110,
-                height: 110,
-                imgUrl: this._image,
-                radius: 100,
-              ),
-              sb(4),
-              _nameheader(context),
-              sb(3),
-              _ubicationHeader(context),
-              sb(20),
-              _actionsHeader(),
-              sb(10),
-              Divider(height: 1.0, color: Colors.grey),
-              sb(15),
-              _actionsConfTitle(context),
-              sb(12),
-              _actionsConf(),
-              sb(20),
-            ],
-          ),
+      ),
+    );
+  }
+
+  // Appbar for this page
+  Widget buildAppBar(BuildContext context) {
+    return AppBar(
+      backgroundColor: Theme.of(context).primaryColor,
+      title: Text(
+        "Mi perfil",
+        style: TextStyle(
+          fontWeight: kAppbarTitles,
+        ),
+      ),
+    );
+  }
+}
+
+class BuildBody extends StatefulWidget {
+  final UserModel user;
+  BuildBody(this.user);
+
+  @override
+  _BuildBodyState createState() => _BuildBodyState();
+}
+
+class _BuildBodyState extends State<BuildBody> {
+  final _prefs = UserPref();
+
+  @override
+  Widget build(BuildContext context) {
+    return NotificationListener<OverscrollIndicatorNotification>(
+      onNotification: (overscroll) {
+        overscroll.disallowGlow();
+        return;
+      },
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            sb(25),
+            CircleImage(
+              width: 110,
+              height: 110,
+              imgUrl: widget.user.img ?? "",
+              radius: 100,
+            ),
+            sb(4),
+            _nameheader(context),
+            sb(3),
+            _ubicationHeader(context),
+            sb(20),
+            _actionsHeader(),
+            sb(10),
+            Divider(height: 1.0, color: Colors.grey),
+            sb(15),
+            _actionsConfTitle(context),
+            sb(12),
+            _actionsConf(),
+            sb(20),
+          ],
         ),
       ),
     );
@@ -111,7 +134,7 @@ class _PerfilPageState extends State<PerfilPage> {
   // User name
   Text _nameheader(BuildContext context) {
     return Text(
-      this._name,
+      widget.user.name,
       style: Theme.of(context).textTheme.headline6.copyWith(
             color: Colors.black87,
             fontWeight: FontWeight.w400,
@@ -122,7 +145,8 @@ class _PerfilPageState extends State<PerfilPage> {
   // User ubication
   Text _ubicationHeader(BuildContext context) {
     return Text(
-      this._ubication,
+      // TODO:: poner direccion desde el back
+      "Bucaramanga, Santander",
       style: Theme.of(context).textTheme.caption.copyWith(
             fontSize: 14.4,
             fontWeight: FontWeight.w300,
@@ -135,9 +159,9 @@ class _PerfilPageState extends State<PerfilPage> {
     return ListView.builder(
       physics: BouncingScrollPhysics(),
       shrinkWrap: true,
-      itemCount: this.actionsList.length,
+      itemCount: actionsList.length,
       itemBuilder: (BuildContext context, int index) =>
-          _listTile(this.actionsList[index]),
+          _listTile(actionsList[index]),
     );
   }
 
@@ -160,22 +184,9 @@ class _PerfilPageState extends State<PerfilPage> {
     return ListView.builder(
       physics: BouncingScrollPhysics(),
       shrinkWrap: true,
-      itemCount: this.confAccount.length,
+      itemCount: confAccount.length,
       itemBuilder: (BuildContext context, int index) =>
-          _listTile(this.confAccount[index]),
-    );
-  }
-
-  // Appbar for this page
-  AppBar buildAppBar() {
-    return AppBar(
-      backgroundColor: Theme.of(context).primaryColor,
-      title: Text(
-        "Mi perfil",
-        style: TextStyle(
-          fontWeight: kAppbarTitles,
-        ),
-      ),
+          _listTile(confAccount[index]),
     );
   }
 
@@ -195,7 +206,7 @@ class _PerfilPageState extends State<PerfilPage> {
         ),
       ),
       onTap: () => (action["title"] == "Cerrar sesión")
-          ? showLogOutDialog(context, _userPref)
+          ? showLogOutDialog(context, _prefs)
           : print(action["action"]),
     );
   }

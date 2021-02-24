@@ -8,13 +8,13 @@ import 'package:agroxpress/src/widgets/list_tile_drawer.dart';
 import 'package:flutter/material.dart';
 
 class DrawerMenu extends StatelessWidget {
-  final _userPrefs = UserPref();
+  final _prefs = UserPref();
 
   @override
   Widget build(BuildContext context) {
-    final _name = _userPrefs.name;
-    final _image = _userPrefs.image != ""
-        ? _userPrefs.image
+    final _name = _prefs.name;
+    final _image = _prefs.image != ""
+        ? _prefs.image
         : "assets/images/person-placeholder.jpg";
 
     return Drawer(
@@ -24,7 +24,7 @@ class DrawerMenu extends StatelessWidget {
           return;
         },
         child: SingleChildScrollView(
-          child: _userPrefs.token != ""
+          child: _prefs.token != ""
               ? _headerLogued(_image, _name, context)
               : _headerSimple(_image, _name, context),
         ),
@@ -182,7 +182,7 @@ class DrawerMenu extends StatelessWidget {
     return ListTileDrawer(
       title: "Cerrar sesión",
       icon: kLogoutIcon,
-      onTapTile: () => showLogOutDialog(context, _userPrefs),
+      onTapTile: () => showLogOutDialog(context, _prefs),
     );
   }
 
@@ -214,7 +214,8 @@ class DrawerMenu extends StatelessWidget {
     return ListTileDrawer(
       title: "Mi perfil",
       icon: kProfileIcon,
-      onTapTile: () => Navigator.pushNamed(context, "perfil"),
+      onTapTile: () =>
+          Navigator.pushNamed(context, "perfil", arguments: _prefs),
     );
   }
 
