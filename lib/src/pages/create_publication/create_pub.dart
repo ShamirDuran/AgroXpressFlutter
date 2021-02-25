@@ -33,7 +33,7 @@ class _CreatePublicationState extends State<CreatePublication> {
   }
 
   _validateName() {
-    if (_nameController.text.length >= 5) {
+    if (_nameController.text.length >= 3) {
       _nameCheck = true;
     } else {
       _nameCheck = false;
@@ -79,7 +79,7 @@ class _CreatePublicationState extends State<CreatePublication> {
                     label: "Ej.: Papa criolla cultivada con no se que",
                     maxLength: 50,
                     type: TextInputType.text,
-                    helper: "Mínimo 5 caracteres",
+                    helper: "Mínimo 3 caracteres",
                   ),
                   sb(20.0),
                   CreatePubTitle(

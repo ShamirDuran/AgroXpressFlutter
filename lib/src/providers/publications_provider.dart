@@ -1,34 +1,59 @@
 import 'dart:convert';
-
+import 'dart:io';
 import 'package:agroxpress/src/models/publication_model.dart';
 import 'package:agroxpress/src/utils/user_prefs.dart';
+import 'package:mime_type/mime_type.dart';
+import 'package:http_parser/http_parser.dart';
 import 'package:http/http.dart' as http;
 
 class PublicationsProvider {
   final _url = "https://agroxpress.herokuapp.com";
   final _prefs = UserPref();
 
-  Future<bool> createPublication(PublicationModel publication) async {
-    // Eliminar este
-    publication.recurrence = 0;
-    publication.totalVotes = 0;
-    publication.productId = "Sin especificar";
+  Future<bool> createPublication(
+      PublicationModel publication, File image) async {
+    final url = Uri.parse("$_url/api/farmer/create_publication");
 
-    final resp = await http.post(
-      "$_url/api/farmer/create_publication",
-      body: publicationModelToJsonRegister(publication),
-      headers: {
-        "Content-Type": "application/json",
-        "authorization": _prefs.token
-      },
-    );
+    // Obtener el tipo de archivo, png - jpg - etc...
+    final mimeType = mime(image.path).split("/");
 
-    Map<String, dynamic> decodedResp = json.decode(resp.body);
+    final headers = {
+      "Content-Type": "application/json",
+      "authorization": _prefs.token.toString(),
+    };
 
-    if (decodedResp["ok"] == true)
-      return true;
-    else
-      return decodedResp["err"]["message"];
+    // Se prepara la petición y se agregan algunos campos
+    var request = new http.MultipartRequest("POST", url)
+      ..fields["name"] = publication.name
+      ..fields["description"] = publication.description
+      ..fields["recurrence"] = publication.recurrence.toString() ?? "0"
+      ..fields["available_units"] = publication.availableUnits.toString()
+      ..fields["measurement_unit"] = publication.measurementUnit
+      ..fields["unit_price"] = publication.unitPrice.toString()
+      ..fields["product_location"] = publication.productLocation
+      ..fields["product"] = publication.productId ?? "Sin escpecificar"
+      ..fields["recurrence"] = "0"
+      ..fields["qualification"] = "5"
+      ..headers.addAll(headers)
+      ..files.add(await http.MultipartFile.fromPath(
+        "image",
+        image.path,
+        contentType: MediaType(mimeType[0], mimeType[1]),
+      ));
+
+    // Se manda la petición al servicio
+    final streamResponse = await request.send();
+    final resp = await http.Response.fromStream(streamResponse);
+
+    // Se comprueba que se haya realizado correctamente
+    if (resp.statusCode != 200 && resp.statusCode != 201) {
+      print("Error al tratar crear la publicación: ${resp.body}");
+      return false;
+    }
+
+    final decodedData = json.decode(resp.body);
+    print("Publicación creada correctamente: $decodedData");
+    return true;
   }
 
   Future<List<PublicationModel>> getAllPublications() async {

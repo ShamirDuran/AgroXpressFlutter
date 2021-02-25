@@ -77,7 +77,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget _bodyHome() {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
+      padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
       child: ListView(
         children: [
           FutureBuilder(
