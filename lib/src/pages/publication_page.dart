@@ -14,6 +14,7 @@ class PublicationPage extends StatefulWidget {
 class _PublicationPageState extends State<PublicationPage> {
   String _id;
   PublicationsProvider _publicationProvider;
+  GlobalKey _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -28,6 +29,7 @@ class _PublicationPageState extends State<PublicationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
         title: Text(
@@ -163,8 +165,7 @@ class _PublicationPageState extends State<PublicationPage> {
           sb(25),
           _titleSection("Métodos de pago"),
           Image.asset("assets/images/payments.png"),
-          FullWidthButton(
-              clickHandler: () => {print("click")}, title: "Solicitar producto")
+          _buyButton(publication)
         ],
       ),
     );
@@ -216,6 +217,82 @@ class _PublicationPageState extends State<PublicationPage> {
         sb(5),
         Text("Pepito Perez", style: TextStyle(fontWeight: FontWeight.w300)),
       ],
+    );
+  }
+
+  Widget _buyButton(PublicationModel publication) {
+    return FullWidthButton(
+      title: "Solicitar producto",
+      clickHandler: () => _showBottomSheet(publication),
+    );
+  }
+
+  _showBottomSheet(PublicationModel publication) {
+    final textColor = Colors.black;
+    final textSize = 16.0;
+
+    showModalBottomSheet(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
+      ),
+      isScrollControlled: true,
+      context: _scaffoldKey.currentContext,
+      builder: (context) => Padding(
+        padding: MediaQuery.of(context).viewInsets,
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                publication.name,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 30.0,
+                    color: textColor),
+              ),
+              sb(10.0),
+              Row(
+                children: [
+                  Text(
+                    "Precio unidad:",
+                    style: TextStyle(fontSize: textSize, color: textColor),
+                  ),
+                  Text(
+                    " \$${publication.unitPrice} ${getUnit(publication)}",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: textSize,
+                        color: textColor),
+                  ),
+                ],
+              ),
+              sb(3.0),
+              Text(
+                "Disponible: ${publication.availableUnits} ${getUnit(publication)}",
+                style: TextStyle(fontSize: textSize, color: textColor),
+              ),
+              sb(3.0),
+              TextFormField(
+                decoration:
+                    InputDecoration(labelText: "Cantidad que desea comprar"),
+              ),
+              sb(25.0),
+              FlatButton(
+                color: Colors.black,
+                textColor: Colors.white,
+                padding: EdgeInsets.symmetric(vertical: 13.0),
+                minWidth: double.infinity,
+                child: Text("Realizar compra"),
+                onPressed: () {},
+              )
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

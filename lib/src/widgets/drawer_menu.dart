@@ -132,7 +132,7 @@ class DrawerMenu extends StatelessWidget {
                       "Hola",
                       style: TextStyle(color: Colors.white, fontSize: 16.0),
                     ),
-                    sb(8),
+                    sb(2),
                     Text(
                       _name,
                       style: Theme.of(context).textTheme.headline5.copyWith(

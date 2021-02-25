@@ -22,7 +22,7 @@ final List<Map<String, dynamic>> actionsList = [
   {
     "title": "Mis Publicaciones",
     "icon": kPublicationsIconFilled,
-    "action": "Mis publicaciones",
+    "action": "my-publications",
   },
 ];
 
@@ -154,7 +154,7 @@ class _BuildBodyState extends State<BuildBody> {
     );
   }
 
-  // Actions for my uses
+  // Menu de acciones para el usuario
   Widget _actionsHeader() {
     return ListView.builder(
       physics: BouncingScrollPhysics(),
@@ -207,7 +207,7 @@ class _BuildBodyState extends State<BuildBody> {
       ),
       onTap: () => (action["title"] == "Cerrar sesión")
           ? showLogOutDialog(context, _prefs)
-          : print(action["action"]),
+          : Navigator.pushNamed(context, action["action"]),
     );
   }
 }

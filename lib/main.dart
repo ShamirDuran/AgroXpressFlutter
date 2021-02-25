@@ -8,7 +8,8 @@ import 'package:agroxpress/src/pages/favorites_page.dart';
 import 'package:agroxpress/src/pages/home_page.dart';
 import 'package:agroxpress/src/pages/login_page.dart';
 import 'package:agroxpress/src/pages/notifications_page.dart';
-import 'package:agroxpress/src/pages/perfil_page.dart';
+import 'package:agroxpress/src/pages/perfil/my_publications_page.dart';
+import 'package:agroxpress/src/pages/perfil/perfil_page.dart';
 import 'package:agroxpress/src/pages/publication_page.dart';
 import 'package:agroxpress/src/pages/register_page.dart';
 import 'package:agroxpress/src/pages/shopping_page.dart';
@@ -66,6 +67,7 @@ class MyApp extends StatelessWidget {
         "create-pub-details": (_) => CreatePubDetails(),
         "create-pub-location": (_) => CreatePubLocation(),
         "publication": (_) => PublicationPage(),
+        "my-publications": (_) => MyPublicationsPage(),
       },
     );
   }
