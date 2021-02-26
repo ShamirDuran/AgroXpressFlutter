@@ -1,18 +1,5 @@
 import 'dart:io';
-
-import 'package:agroxpress/src/pages/categories_page.dart';
-import 'package:agroxpress/src/pages/create_publication/create_pub.dart';
-import 'package:agroxpress/src/pages/create_publication/create_pub_details.dart';
-import 'package:agroxpress/src/pages/create_publication/create_pub_location.dart';
-import 'package:agroxpress/src/pages/favorites_page.dart';
-import 'package:agroxpress/src/pages/home_page.dart';
-import 'package:agroxpress/src/pages/login_page.dart';
-import 'package:agroxpress/src/pages/notifications_page.dart';
-import 'package:agroxpress/src/pages/perfil/my_publications_page.dart';
-import 'package:agroxpress/src/pages/perfil/perfil_page.dart';
-import 'package:agroxpress/src/pages/publication_page.dart';
-import 'package:agroxpress/src/pages/register_page.dart';
-import 'package:agroxpress/src/pages/shopping_page.dart';
+import 'package:agroxpress/src/routes/routes.dart';
 import 'package:agroxpress/src/utils/user_prefs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -54,21 +41,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'AgroXpress',
       initialRoute: "home",
-      routes: {
-        "home": (_) => HomePage(),
-        "login": (_) => LoginPage(),
-        "register": (_) => RegisterPage(),
-        "notifications": (_) => NotificationsPage(),
-        "shopping": (_) => ShoppingPage(),
-        "favorites": (_) => FavoritesPage(),
-        "perfil": (_) => PerfilPage(),
-        "categories": (_) => CategoriesPage(),
-        "create-publication": (_) => CreatePublication(),
-        "create-pub-details": (_) => CreatePubDetails(),
-        "create-pub-location": (_) => CreatePubLocation(),
-        "publication": (_) => PublicationPage(),
-        "my-publications": (_) => MyPublicationsPage(),
-      },
+      routes: routes,
     );
   }
 }

@@ -1,17 +1,11 @@
 import 'dart:convert';
 import 'package:agroxpress/src/models/user_model.dart';
 import 'package:agroxpress/src/utils/user_prefs.dart';
-import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 
 class UserProvider {
   final _url = "https://agroxpress.herokuapp.com";
   static UserPref _prefs = UserPref();
-
-  final _headerOptions = new Options(
-    contentType: "application/json",
-    headers: {"authorization": _prefs.token},
-  );
 
   // User login, save token in shared preferences
   Future<bool> loginUser(String email, String password) async {
