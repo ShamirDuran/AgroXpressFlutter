@@ -1,15 +1,12 @@
-import 'package:agroxpress/src/models/publication_model.dart';
 import 'package:agroxpress/src/utils/utils.dart';
 import 'package:flutter/material.dart';
 
-class PublicationCard extends StatelessWidget {
-  final PublicationModel _publication;
+class ShoppingCard extends StatelessWidget {
   final height = 110.0;
-
-  PublicationCard(this._publication);
 
   @override
   Widget build(BuildContext context) {
+    print("se llamo");
     return Column(
       children: [
         Row(
@@ -21,7 +18,7 @@ class PublicationCard extends StatelessWidget {
                 child: FadeInImage(
                   placeholder:
                       AssetImage("assets/images/image-placeholder.png"),
-                  image: NetworkImage(_publication.image),
+                  image: AssetImage("assets/images/image-placeholder.png"),
                   height: height,
                   fit: BoxFit.cover,
                   fadeInDuration: Duration(milliseconds: 300),
@@ -36,8 +33,9 @@ class PublicationCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    // Titulo
                     Text(
-                      _publication.name,
+                      "Titulo publicación",
                       style: TextStyle(fontSize: 18.0),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
@@ -45,21 +43,18 @@ class PublicationCard extends StatelessWidget {
                     sb(2.0),
                     // TODO: añadir fecha tambien
                     Text(
-                      _publication.productLocation,
+                      "2021-03-05",
                       style: TextStyle(
                           fontWeight: FontWeight.w300, fontSize: 14.0),
                       overflow: TextOverflow.ellipsis,
                     ),
                     sb(20.0),
-                    Row(
-                      children: [
-                        Text(
-                          "\$ ${_publication.unitPrice}",
-                          style: TextStyle(fontSize: 18.0),
-                        ),
-                        Text(" /${_publication.getMeasurement()}"),
-                      ],
-                    )
+                    Expanded(child: Text("")),
+                    Text("Valor total: "),
+                    Text(
+                      "\$ 3,500",
+                      style: TextStyle(fontSize: 18.0),
+                    ),
                   ],
                 ),
               ),

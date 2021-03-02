@@ -104,7 +104,7 @@ class _PublicationPageState extends State<PublicationPage> {
             // Publicacion - precio por unidad
             PriceBadge(
               text:
-                  "\$ ${publication.unitPrice.toString()} ${getUnit(publication)}",
+                  "\$ ${publication.getPriceFormated()} / ${publication.getMeasurement()}",
               radius: 50.0,
               pHor: 10.0,
               pVer: 7.0,
@@ -262,7 +262,7 @@ class _PublicationPageState extends State<PublicationPage> {
                     style: TextStyle(fontSize: textSize, color: textColor),
                   ),
                   Text(
-                    " \$${publication.unitPrice} ${getUnit(publication)}",
+                    " \$${publication.getPriceFormated()} /${publication.getMeasurement()}",
                     style: TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: textSize,
@@ -272,7 +272,7 @@ class _PublicationPageState extends State<PublicationPage> {
               ),
               sb(3.0),
               Text(
-                "Disponible: ${publication.availableUnits} ${getUnit(publication)}",
+                "Disponible: ${publication.availableUnits} ${publication.getMeasurement()}",
                 style: TextStyle(fontSize: textSize, color: textColor),
               ),
               sb(3.0),

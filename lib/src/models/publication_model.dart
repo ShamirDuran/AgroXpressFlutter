@@ -3,6 +3,7 @@
 //     final publicationModel = publicationModelFromMap(jsonString);
 
 import 'dart:convert';
+import 'package:intl/intl.dart';
 
 class Publications {
   List<PublicationModel> items = List();
@@ -100,4 +101,23 @@ class PublicationModel {
         "qualification": totalVotes,
         "product": productId,
       };
+
+  String getPriceFormated() {
+    var template = new NumberFormat("###,###.##");
+    return template.format(this.unitPrice);
+  }
+
+  /*
+  * Se debe tratar las unidades debido a que el api retorna algunas veces
+  * solo la unidad, ejem: "Kg", pero en otras ocasiones retorna ejem: "Libras (lb)".
+  */
+
+  /// Trata el string de unidades que retorna el api de forma que solo obtenga la nomenclatura de la unidad
+  String getMeasurement() {
+    if (this.measurementUnit.length < 4) return this.measurementUnit;
+
+    final temp = this.measurementUnit.split(" ")[1];
+
+    return temp.substring(1, temp.length - 1);
+  }
 }

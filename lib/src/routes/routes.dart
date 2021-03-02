@@ -10,7 +10,7 @@ import 'package:agroxpress/src/pages/perfil/my_publications_page.dart';
 import 'package:agroxpress/src/pages/perfil/perfil_page.dart';
 import 'package:agroxpress/src/pages/publication_page.dart';
 import 'package:agroxpress/src/pages/register_page.dart';
-import 'package:agroxpress/src/pages/shopping_page.dart';
+import 'package:agroxpress/src/pages/my_shopping/shopping_page.dart';
 
 final routes = {
   "home": (_) => HomePage(),

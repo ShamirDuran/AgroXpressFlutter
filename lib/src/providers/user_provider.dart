@@ -71,20 +71,5 @@ class UserProvider {
       print("Error obteniendo data user, ${decodedData["message"]}");
       return null;
     }
-
-    // try {
-    //   print("{$_url/api/user/get_information}");
-
-    //   final resp = await Dio().post(
-    //     "$_url/api/user/get_information",
-    //     queryParameters: {"id_user": id,},
-    //     options: _headerOptions,
-    //   );
-
-    //   return UserModel.fromJson(resp.data["user"]);
-    // } catch (e) {
-    //   print("Error al tratar de obtener data del usuario: ${e.toString()}");
-    //   return null;
-    // }
   }
 }

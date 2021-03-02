@@ -49,18 +49,3 @@ void showLogOutDialog(BuildContext context, UserPref userPref) {
     ),
   );
 }
-
-/*
- * Se debe tratar las unidades debido a que el api retorna algunas veces
- * solo la unidad, ejem: "Kg", pero en otras ocasiones retorna ejem: "Libras (lb)".
- */
-
-/// Trata el string de unidades que retorna el api de forma que solo obtenga la nomenclatura de la unidad
-String getUnit(PublicationModel publication) {
-  if (publication.measurementUnit.length < 4)
-    return publication.measurementUnit;
-
-  final temp = publication.measurementUnit.split(" ")[1];
-
-  return temp.substring(1, temp.length - 1);
-}

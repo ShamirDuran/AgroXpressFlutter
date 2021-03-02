@@ -3,12 +3,18 @@ import 'dart:io';
 import 'package:agroxpress/src/models/publication_model.dart';
 import 'package:agroxpress/src/utils/user_prefs.dart';
 import 'package:mime_type/mime_type.dart';
+import 'package:dio/dio.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:http/http.dart' as http;
 
 class PublicationsProvider {
   final _url = "https://agroxpress.herokuapp.com";
-  final _prefs = UserPref();
+  static final _prefs = UserPref();
+
+  final headerOptions = new Options(
+    contentType: "application/json",
+    headers: {"authorization": _prefs.token},
+  );
 
   Future<bool> createPublication(
       PublicationModel publication, File image) async {
@@ -56,6 +62,7 @@ class PublicationsProvider {
     return true;
   }
 
+  // Obtiene todas las publicaciones registradas hasta el momento
   Future<List<PublicationModel>> getAllPublications() async {
     final url = "$_url/api/client/get_all_publications";
     final response = await http.get(url);
@@ -64,13 +71,14 @@ class PublicationsProvider {
       final decodedData = json.decode(response.body);
       final publications =
           Publications.fromJsonList(decodedData["publications"]);
-      return publications.items;
+      return publications.items.reversed.toList();
     } else {
       print("GetAllPublications error request, $_url");
       return null;
     }
   }
 
+  // Obtiene los detalles de una publicación mediante el id de esta
   Future<PublicationModel> getPublication(String id) async {
     final uri = Uri.https(
         "agroxpress.herokuapp.com", "/api/client/get_publication_id", {
@@ -88,6 +96,21 @@ class PublicationsProvider {
     } else {
       print("GetPublicationId error request, ${decodedData["message"]}");
       return null;
+    }
+  }
+
+  // Obtiene las publicaciones para el usuario logueado
+  Future<List<PublicationModel>> getUserPublications() async {
+    try {
+      final url = "$_url/api/farmer/get_user_publications";
+      final resp = await Dio().get(url, options: headerOptions);
+      final publications =
+          Publications.fromJsonList(resp.data["user_publications"]);
+
+      return publications.items;
+    } catch (e) {
+      print("Error obteniendo mis publicaciones: ${e.toString()}");
+      return [];
     }
   }
 }

@@ -12,7 +12,7 @@ final List<Map<String, dynamic>> actionsList = [
   {
     "title": "Mis compras",
     "icon": kShoppingIconFilled,
-    "action": "Mis compras",
+    "action": "shopping",
   },
   {
     "title": "Mis ventas",

@@ -57,6 +57,7 @@ class Carousel extends StatelessWidget {
   Widget _card(BuildContext context, PublicationModel publication) {
     final imageWidth = 125.0;
     final imageHeight = 175.0;
+
     return GestureDetector(
       onTap: () => _pref.token == ""
           ? showSnackBar(
@@ -105,7 +106,8 @@ class Carousel extends StatelessWidget {
             sb(5.0),
             // Price
             PriceBadge(
-              text: "\$ ${publication.unitPrice} ${getUnit(publication)}",
+              text:
+                  "\$ ${publication.getPriceFormated()} ${publication.getMeasurement()}",
               radius: 2.0,
               size: 14.0,
             ),

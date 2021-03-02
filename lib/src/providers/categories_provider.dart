@@ -1,8 +1,5 @@
-import 'dart:convert';
-
 import 'package:agroxpress/src/models/categorie_model.dart';
 import 'package:agroxpress/src/utils/user_prefs.dart';
-import 'package:http/http.dart' as http;
 import 'package:dio/dio.dart';
 
 class CategoriesProvider {
