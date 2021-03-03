@@ -33,7 +33,7 @@ class PublicationModel {
     this.productId,
     this.name,
     this.description,
-    // this.creationDate,
+    this.creationDate,
     this.recurrence,
     this.availableUnits,
     this.measurementUnit,
@@ -48,7 +48,7 @@ class PublicationModel {
   String productId;
   String name;
   String description;
-  // DateTime creationDate;
+  DateTime creationDate;
   int recurrence;
   int availableUnits;
   String measurementUnit;
@@ -59,12 +59,14 @@ class PublicationModel {
 
   factory PublicationModel.fromJson(Map<String, dynamic> json) =>
       PublicationModel(
-        id: json["id"],
+        id: json["id"] ?? json["_id"],
         authorId: json["author_id"],
         productId: json["product_id"],
         name: json["name"],
         description: json["description"],
-        // creationDate: DateTime.parse(json["creation_date"]) ,
+        creationDate: json["creation_date"] != null
+            ? DateTime.parse(json["creation_date"])
+            : null,
         recurrence: json["recurrence"],
         availableUnits: json["available_units"],
         measurementUnit: json["measurement_unit"],

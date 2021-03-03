@@ -10,14 +10,14 @@ import 'package:agroxpress/src/pages/perfil/my_publications_page.dart';
 import 'package:agroxpress/src/pages/perfil/perfil_page.dart';
 import 'package:agroxpress/src/pages/publication_page.dart';
 import 'package:agroxpress/src/pages/register_page.dart';
-import 'package:agroxpress/src/pages/my_shopping/shopping_page.dart';
+import 'package:agroxpress/src/pages/my_shopping/purchases_page.dart';
 
 final routes = {
   "home": (_) => HomePage(),
   "login": (_) => LoginPage(),
   "register": (_) => RegisterPage(),
   "notifications": (_) => NotificationsPage(),
-  "shopping": (_) => ShoppingPage(),
+  "shopping": (_) => PurchasesPage(),
   "favorites": (_) => FavoritesPage(),
   "perfil": (_) => PerfilPage(),
   "categories": (_) => CategoriesPage(),

@@ -113,4 +113,20 @@ class PublicationsProvider {
       return [];
     }
   }
+
+  Future<List<PublicationModel>> getSearch(String query) async {
+    try {
+      final resp = await Dio().get(
+        "$_url/api/client/get_publication_by_term",
+        queryParameters: {"term": query},
+        options: headerOptions,
+      );
+
+      final publications = Publications.fromJsonList(resp.data["publications"]);
+      return publications.items;
+    } catch (e) {
+      print("Error al obtener busqueda: ${e.toString()}");
+      return [];
+    }
+  }
 }

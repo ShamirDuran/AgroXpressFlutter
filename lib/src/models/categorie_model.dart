@@ -6,9 +6,7 @@ import 'dart:convert';
 
 class Categories {
   List<CategorieModel> items = List();
-
   Categories();
-
   Categories.fromJsonList(List<dynamic> jsonList) {
     if (jsonList == null) return;
     items

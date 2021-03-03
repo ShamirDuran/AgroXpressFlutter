@@ -1,28 +1,24 @@
+import 'package:agroxpress/src/models/publication_model.dart';
+import 'package:agroxpress/src/models/purchase_model.dart';
+import 'package:agroxpress/src/providers/publications_provider.dart';
 import 'package:agroxpress/src/utils/utils.dart';
 import 'package:flutter/material.dart';
 
-class ShoppingCard extends StatelessWidget {
+class PurchasesCard extends StatelessWidget {
   final height = 110.0;
+  final PurchaseModel _purchase;
+  final _publicationProvider = new PublicationsProvider();
+
+  PurchasesCard(this._purchase);
 
   @override
   Widget build(BuildContext context) {
-    print("se llamo");
     return Column(
       children: [
         Row(
           children: [
             // imagen de la publicaciones
-            Flexible(
-                flex: 2,
-                fit: FlexFit.tight,
-                child: FadeInImage(
-                  placeholder:
-                      AssetImage("assets/images/image-placeholder.png"),
-                  image: AssetImage("assets/images/image-placeholder.png"),
-                  height: height,
-                  fit: BoxFit.cover,
-                  fadeInDuration: Duration(milliseconds: 300),
-                )),
+            _buildImage(),
             // Breve descripción de la publicación
             Flexible(
               flex: 3,
@@ -35,7 +31,7 @@ class ShoppingCard extends StatelessWidget {
                   children: [
                     // Titulo
                     Text(
-                      "Titulo publicación",
+                      _purchase.name,
                       style: TextStyle(fontSize: 18.0),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
@@ -43,7 +39,7 @@ class ShoppingCard extends StatelessWidget {
                     sb(2.0),
                     // TODO: añadir fecha tambien
                     Text(
-                      "2021-03-05",
+                      _purchase.date.toString().substring(0, 10),
                       style: TextStyle(
                           fontWeight: FontWeight.w300, fontSize: 14.0),
                       overflow: TextOverflow.ellipsis,
@@ -52,7 +48,7 @@ class ShoppingCard extends StatelessWidget {
                     Expanded(child: Text("")),
                     Text("Valor total: "),
                     Text(
-                      "\$ 3,500",
+                      "\$ ${_purchase.getPriceFormated()}",
                       style: TextStyle(fontSize: 18.0),
                     ),
                   ],
@@ -65,6 +61,32 @@ class ShoppingCard extends StatelessWidget {
           color: Colors.black26,
         ),
       ],
+    );
+  }
+
+  Widget _buildImage() {
+    return FutureBuilder(
+      future: _publicationProvider.getPublication(_purchase.publication),
+      builder:
+          (BuildContext context, AsyncSnapshot<PublicationModel> snapshot) {
+        if (snapshot.hasData) {
+          final imageUrl = snapshot.data.image;
+          return Flexible(
+              flex: 2,
+              fit: FlexFit.tight,
+              child: Image.network(
+                imageUrl,
+                height: height,
+                fit: BoxFit.cover,
+              ));
+        } else {
+          return Image.asset(
+            "assets/images/image-placeholder.png",
+            height: height,
+            fit: BoxFit.cover,
+          );
+        }
+      },
     );
   }
 }
