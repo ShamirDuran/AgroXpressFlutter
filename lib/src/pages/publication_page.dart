@@ -1,9 +1,11 @@
+import 'package:agroxpress/src/bloc/purchase_bloc.dart';
 import 'package:agroxpress/src/models/publication_model.dart';
 import 'package:agroxpress/src/providers/publications_provider.dart';
 import 'package:agroxpress/src/utils/utils.dart';
 import 'package:agroxpress/src/widgets/circle_image.dart';
 import 'package:agroxpress/src/widgets/full_width_button.dart';
 import 'package:agroxpress/src/widgets/price_badge.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class PublicationPage extends StatefulWidget {
@@ -15,6 +17,7 @@ class _PublicationPageState extends State<PublicationPage> {
   String _id;
   PublicationsProvider _publicationProvider;
   GlobalKey _scaffoldKey = GlobalKey<ScaffoldState>();
+  final _controller = TextEditingController();
 
   @override
   void initState() {
@@ -91,8 +94,10 @@ class _PublicationPageState extends State<PublicationPage> {
               SizedBox(height: 5.0),
               Text(
                 // TODO: poner fecha desde backend
-                "Publicado el 14/12/2020",
-                style: Theme.of(context).textTheme.caption,
+                "Publicado el ${publication.creationDate.toString().substring(0, 10)}",
+                style: Theme.of(context).textTheme.caption.copyWith(
+                      fontSize: 12.5,
+                    ),
               ),
             ],
           ),
@@ -221,15 +226,21 @@ class _PublicationPageState extends State<PublicationPage> {
   }
 
   Widget _buyButton(PublicationModel publication) {
-    return FullWidthButton(
-      title: "Solicitar producto",
-      clickHandler: () => _showBottomSheet(publication),
-    );
+    return StreamBuilder<Object>(
+        stream: null,
+        builder: (context, snapshot) {
+          return FullWidthButton(
+            title: "Solicitar producto",
+            clickHandler: () => _showBottomSheet(publication),
+          );
+        });
   }
 
   _showBottomSheet(PublicationModel publication) {
     final textColor = Colors.black;
     final textSize = 16.0;
+    final _bloc = PurchaseBloc();
+    _bloc.availableUnits = publication.availableUnits;
 
     showModalBottomSheet(
       shape: RoundedRectangleBorder(
@@ -276,23 +287,69 @@ class _PublicationPageState extends State<PublicationPage> {
                 style: TextStyle(fontSize: textSize, color: textColor),
               ),
               sb(3.0),
-              TextFormField(
-                decoration:
-                    InputDecoration(labelText: "Cantidad que desea comprar"),
-              ),
+              StreamBuilder<Object>(
+                  stream: _bloc.amountStream,
+                  builder: (context, snapshot) {
+                    return TextFormField(
+                      controller: _controller,
+                      textInputAction: TextInputAction.done,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        labelText: "Cantidad que desea comprar",
+                        errorText: snapshot.error,
+                      ),
+                      onChanged: (value) {
+                        _bloc.changeAmount = value;
+                      },
+                    );
+                  }),
               sb(25.0),
-              FlatButton(
-                color: Colors.black,
-                textColor: Colors.white,
-                padding: EdgeInsets.symmetric(vertical: 13.0),
-                minWidth: double.infinity,
-                child: Text("Realizar compra"),
-                onPressed: () {},
+              StreamBuilder<Object>(
+                stream: _bloc.amountStream,
+                builder: (context, snapshot) {
+                  return FlatButton(
+                    color: Colors.black,
+                    textColor: Colors.white,
+                    padding: EdgeInsets.symmetric(vertical: 13.0),
+                    minWidth: double.infinity,
+                    child: Text("Realizar compra"),
+                    disabledColor: Colors.black38,
+                    onPressed: (snapshot.hasData)
+                        ? () => _purchase(publication, _bloc)
+                        : null,
+                  );
+                },
               )
             ],
           ),
         ),
       ),
     );
+  }
+
+  void _purchase(PublicationModel publication, PurchaseBloc bloc) async {
+    final resp =
+        await _publicationProvider.purchase(publication.id, _controller.text);
+
+    bloc.dispose();
+    _controller.text = "";
+    if (resp) {
+      showDialog(
+          context: context,
+          builder: (_) => new AlertDialog(
+                title: Text("Compra exitosa"),
+                actions: [
+                  FlatButton(
+                    child: Text("Ok"),
+                    onPressed: () => Navigator.popAndPushNamed(
+                        context, "publication",
+                        arguments: publication.id),
+                  )
+                ],
+              ));
+    } else {
+      showSnackBar("Error en la compra", _scaffoldKey);
+      Navigator.pop(context);
+    }
   }
 }

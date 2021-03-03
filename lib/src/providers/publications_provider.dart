@@ -78,7 +78,7 @@ class PublicationsProvider {
     }
   }
 
-  // Obtiene los detalles de una publicación mediante el id de esta
+  /// Obtiene los detalles de una publicación mediante el id de esta
   Future<PublicationModel> getPublication(String id) async {
     final uri = Uri.https(
         "agroxpress.herokuapp.com", "/api/client/get_publication_id", {
@@ -99,7 +99,7 @@ class PublicationsProvider {
     }
   }
 
-  // Obtiene las publicaciones para el usuario logueado
+  /// Obtiene las publicaciones para el usuario logueado
   Future<List<PublicationModel>> getUserPublications() async {
     try {
       final url = "$_url/api/farmer/get_user_publications";
@@ -114,6 +114,7 @@ class PublicationsProvider {
     }
   }
 
+  /// Obtiene todas las publicaciones que en el nombre contengan el string de busqueda
   Future<List<PublicationModel>> getSearch(String query) async {
     try {
       final resp = await Dio().get(
@@ -127,6 +128,25 @@ class PublicationsProvider {
     } catch (e) {
       print("Error al obtener busqueda: ${e.toString()}");
       return [];
+    }
+  }
+
+  /// Simula una compra
+  Future<bool> purchase(String publicationId, String quantity) async {
+    try {
+      final resp = await Dio().post(
+        "$_url/api/user/save_history",
+        queryParameters: {
+          "publication_id": publicationId,
+          "quantity": quantity,
+        },
+        options: headerOptions,
+      );
+
+      return resp.data["ok"];
+    } catch (e) {
+      print("Error al realizar la compra: ${e.toString()}");
+      return false;
     }
   }
 }

@@ -28,7 +28,8 @@ class PurchasesPage extends StatelessWidget {
               return Center(
                   child: Text("Aqui podras ver las compras que realices"));
             } else {
-              return _buildBody(snapshot.data);
+              final list = snapshot.data.reversed.toList();
+              return _buildBody(list);
             }
           } else {
             return Center(
