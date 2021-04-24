@@ -341,9 +341,7 @@ class _PublicationPageState extends State<PublicationPage> {
                 actions: [
                   FlatButton(
                     child: Text("Ok"),
-                    onPressed: () => Navigator.popAndPushNamed(
-                        context, "publication",
-                        arguments: publication.id),
+                    onPressed: () => Navigator.popAndPushNamed(context, "home"),
                   )
                 ],
               ));

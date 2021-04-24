@@ -6,7 +6,7 @@ import 'dart:convert';
 import 'package:intl/intl.dart';
 
 class Purchases {
-  List<PurchaseModel> items = List();
+  List<PurchaseModel> items = [];
   Purchases();
   Purchases.fromJson(List<dynamic> jsonList) {
     if (jsonList == null) return;

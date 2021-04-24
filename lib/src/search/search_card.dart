@@ -55,7 +55,7 @@ class SearchCard extends StatelessWidget {
                       "\$ ${_publication.unitPrice}",
                       style: TextStyle(fontSize: 18.0),
                     ),
-                    Text(" /${_publication.getMeasurement()}"),
+                    // Text(" /${_publication.getMeasurement()}"),
                   ],
                 ),
               ],

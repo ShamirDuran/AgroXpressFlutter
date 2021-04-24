@@ -5,10 +5,11 @@
 import 'dart:convert';
 
 class Categories {
-  List<CategorieModel> items = List();
+  List<CategorieModel> items = [];
   Categories();
   Categories.fromJsonList(List<dynamic> jsonList) {
     if (jsonList == null) return;
+
     items
         .addAll(jsonList.map((item) => CategorieModel.fromJson(item)).toList());
   }

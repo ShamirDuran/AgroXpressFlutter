@@ -86,7 +86,9 @@ class UserProvider {
     try {
       final resp = await Dio()
           .get("$_url/api/user/get_purchases", options: headerOptions);
+
       final purchases = Purchases.fromJson(resp.data["purchases"]);
+
       return purchases.items;
     } catch (e) {
       print("Error al obtener mis compras: ${e.toString()}");

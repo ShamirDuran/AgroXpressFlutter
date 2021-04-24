@@ -45,7 +45,7 @@ class _CreatePubDetailsState extends State<CreatePubDetails> {
   }
 
   List<DropdownMenuItem<String>> getDropDownMenuitems() {
-    List<DropdownMenuItem<String>> items = new List();
+    List<DropdownMenuItem<String>> items = [];
     for (String unit in _measurementUnits) {
       items.add(new DropdownMenuItem(
         value: unit,

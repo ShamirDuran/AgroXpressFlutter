@@ -6,7 +6,7 @@ import 'dart:convert';
 import 'package:intl/intl.dart';
 
 class Publications {
-  List<PublicationModel> items = List();
+  List<PublicationModel> items = [];
 
   Publications();
 

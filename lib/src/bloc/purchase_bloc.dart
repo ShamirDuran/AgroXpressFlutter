@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:rxdart/rxdart.dart';
 
 class PurchaseBloc {
@@ -10,7 +9,6 @@ class PurchaseBloc {
   Stream<int> get amountStream =>
       _amountController.stream.transform(amountValidator);
 
-  // Set
   // Function(int) get changeAmount => _amountController.sink.add;
   set changeAmount(String availableUnits) {
     _amountController.sink.add(int.parse(availableUnits));
