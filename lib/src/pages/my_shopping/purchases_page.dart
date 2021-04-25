@@ -1,6 +1,5 @@
 import 'package:agroxpress/src/models/purchase_model.dart';
 import 'package:agroxpress/src/pages/my_shopping/purchases_card.dart';
-import 'package:agroxpress/src/providers/publications_provider.dart';
 import 'package:agroxpress/src/providers/user_provider.dart';
 import 'package:agroxpress/src/utils/styles.dart';
 import 'package:agroxpress/src/utils/utils.dart';

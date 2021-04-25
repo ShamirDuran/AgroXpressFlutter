@@ -1,4 +1,3 @@
-import 'package:agroxpress/src/models/publication_model.dart';
 import 'package:agroxpress/src/utils/user_prefs.dart';
 import 'package:flutter/material.dart';
 
@@ -15,8 +14,7 @@ void showSnackBar(String msg, GlobalKey<ScaffoldState> key) {
     content: Text(msg),
     duration: Duration(milliseconds: 3200),
   );
-
-  key.currentState.showSnackBar(snack);
+  ScaffoldMessenger.of(key.currentContext).showSnackBar(snack);
 }
 
 // Log out account dialog
@@ -28,13 +26,13 @@ void showLogOutDialog(BuildContext context, UserPref userPref) {
       title: Text("Cerrar sesión"),
       content: Text("¿Desea cerrar su sesión?"),
       actions: [
-        FlatButton(
+        TextButton(
           child: Text("Cancelar"),
           onPressed: () {
             Navigator.of(context).pop();
           },
         ),
-        FlatButton(
+        TextButton(
           child: Text("Ok"),
           onPressed: () {
             // TODO: Borrar esto si se cambia logica por traer desde backend

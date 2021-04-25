@@ -65,7 +65,7 @@ class PublicationsProvider {
   // Obtiene todas las publicaciones registradas hasta el momento
   Future<List<PublicationModel>> getAllPublications() async {
     final url = "$_url/api/client/get_all_publications";
-    final response = await http.get(url);
+    final response = await http.get(Uri.parse(url));
 
     if (response.statusCode == 200) {
       final decodedData = json.decode(response.body);

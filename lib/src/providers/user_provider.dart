@@ -21,7 +21,7 @@ class UserProvider {
       "password": password,
     };
 
-    final resp = await http.post("$_url/api/login", body: authData);
+    final resp = await http.post(Uri.parse("$_url/api/login"), body: authData);
 
     Map<String, dynamic> decodedResp = json.decode(resp.body);
 
@@ -48,7 +48,7 @@ class UserProvider {
       "password": password,
     };
 
-    final resp = await http.post("$_url/api/signup", body: authData);
+    final resp = await http.post(Uri.parse("$_url/api/signup"), body: authData);
 
     Map<String, dynamic> decodedResp = json.decode(resp.body);
 

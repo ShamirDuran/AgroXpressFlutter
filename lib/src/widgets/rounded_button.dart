@@ -21,7 +21,7 @@ class RoundedButton extends StatelessWidget {
             ? Theme.of(context).primaryColor
             : Theme.of(context).disabledColor,
       ),
-      child: FlatButton(
+      child: TextButton(
         child: Text(
           this.text,
           style: Theme.of(context).textTheme.headline6.copyWith(

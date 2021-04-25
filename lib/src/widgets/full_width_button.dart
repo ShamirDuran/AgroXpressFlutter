@@ -11,11 +11,13 @@ class FullWidthButton extends StatelessWidget {
     return Container(
       width: double.infinity,
       margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-      child: RaisedButton(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(4.0),
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          primary: Theme.of(context).primaryColor,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(4.0),
+          ),
         ),
-        color: Theme.of(context).primaryColor,
         onPressed: this.clickHandler,
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 15.0),

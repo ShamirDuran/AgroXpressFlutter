@@ -339,7 +339,7 @@ class _PublicationPageState extends State<PublicationPage> {
           builder: (_) => new AlertDialog(
                 title: Text("Compra exitosa"),
                 actions: [
-                  FlatButton(
+                  TextButton(
                     child: Text("Ok"),
                     onPressed: () => Navigator.popAndPushNamed(context, "home"),
                   )

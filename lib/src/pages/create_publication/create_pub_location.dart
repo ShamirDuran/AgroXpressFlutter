@@ -69,10 +69,12 @@ class _CreatePubLocationState extends State<CreatePubLocation> {
                   _showImage(),
                   CreatePubTitle(title: "Agrega una foto del producto"),
                   sb(10),
-                  OutlineButton(
-                    borderSide:
-                        BorderSide(color: Theme.of(context).primaryColor),
-                    textColor: Theme.of(context).primaryColor,
+                  OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                      side: BorderSide(color: Theme.of(context).primaryColor),
+                      textStyle:
+                          TextStyle(color: Theme.of(context).primaryColor),
+                    ),
                     child: Text("Agregar foto"),
                     onPressed: _showBottomSheet,
                   ),
